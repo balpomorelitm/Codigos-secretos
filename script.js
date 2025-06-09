@@ -349,10 +349,16 @@ document.addEventListener('DOMContentLoaded', () => {
         azulRestantes.textContent = restantes.azul;
     }
 
-    function mostrarMensajeVictoria(equipo) {
+    function mostrarMensajeVictoria(equipo, asesinado = null) {
         mensajeVictoria.innerHTML = equipo === 'rojo'
             ? '🔴 <strong>¡VICTORIA ROJA!</strong> 🎉'
             : '🔵 <strong>¡VICTORIA AZUL!</strong> 🎉';
+
+        if (asesinado) {
+            const emoji = asesinado === 'rojo' ? '🔴' : '🔵';
+            mensajeVictoria.innerHTML += `<br>${emoji} El espía ${asesinado} ha sido asesinado`;
+        }
+
         mensajeVictoria.classList.remove('rojo', 'azul', 'oculto');
         mensajeVictoria.classList.add(equipo);
     }
@@ -496,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tarjeta.dataset.rol === 'asesino') {
             juegoTerminado = true;
             const ganador = equipoActual === 'rojo' ? 'azul' : 'rojo';
-            mostrarMensajeVictoria(ganador);
+            mostrarMensajeVictoria(ganador, equipoActual);
         } else {
             if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
                 restantes[tarjeta.dataset.rol]--;
@@ -513,6 +519,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     botonEmojiToggle.classList.add("active");
+
+    /* --- Lógica para el Tooltip de Ayuda --- */
+    const iconoAyuda = document.getElementById('icono-ayuda');
+    const tooltipAyuda = document.getElementById('tooltip-ayuda');
+
+    iconoAyuda.addEventListener('click', (event) => {
+        event.stopPropagation();
+        tooltipAyuda.classList.toggle('tooltip-oculto');
+    });
+
+    window.addEventListener('click', () => {
+        if (!tooltipAyuda.classList.contains('tooltip-oculto')) {
+            tooltipAyuda.classList.add('tooltip-oculto');
+        }
+    });
+
+    tooltipAyuda.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
     colorearTitulo();
     cargarPalabras().then(iniciarJuego);
 
