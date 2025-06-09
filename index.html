@@ -9,8 +9,18 @@
 <body>
     <h1>Código Secreto para la clase de ELE</h1>
     <div class="controles">
+        <label for="tamanoGrid">Tamaño del tablero:</label>
+        <select id="tamanoGrid">
+            <option value="5" selected>5x5</option>
+            <option value="4">4x4</option>
+            <option value="3">3x3</option>
+        </select>
         <button id="nuevoJuego">Nuevo Juego</button>
         <button id="vistaEspia">Ver/Ocultar Vista del Espía</button>
+    </div>
+    <div id="informacion">
+        <p id="turno"></p>
+        <p>Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span></p>
     </div>
     <div id="tablero"></div>
     <script src="script.js"></script>

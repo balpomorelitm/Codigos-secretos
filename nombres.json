@@ -1,5 +1,32 @@
-[
-  "casa",
+
+{
+  "nombres": [
+    "Pek\u00edn",
+    "Drag\u00f3n",
+    "Laura",
+    "Kimono",
+    "Miguel",
+    "Bons\u00e1i",
+    "Playa",
+    "Mont\u00f1a",
+    "Juan",
+    "Pagoda",
+    "Guitarra",
+    "Templo",
+    "Fuego",
+    "Sushi",
+    "Ana",
+    "Sombra",
+    "R\u00edo",
+    "Marta",
+    "Ganges",
+    "Sol",
+    "Mandar\u00edn",
+    "Sari",
+    "Carlos",
+    "Espejo",
+    "Luc\u00eda"
+    "casa",
   "coche",
   "perro",
   "gato",
@@ -199,4 +226,5 @@
   "Ignacio",
   "Gloria",
   "Yolanda"
-]
+  ]
+}
