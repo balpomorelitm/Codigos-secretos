@@ -4,22 +4,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonVistaEspia = document.getElementById('vistaEspia');
     const selectorTamano = document.getElementById('tamanoGrid');
 
-    // --- ¡EDITA ESTA LISTA PARA USAR TUS PROPIAS PALABRAS! ---
-    const palabras = [
-        "Hospital", "Guitarra", "Zumo", "Río", "Biblioteca", "Taxi", "Casa", "Pan",
-        "Playa", "Hong Kong", "Teatro", "Semana", "Camina", "Aeropuerto", "Bailar",
-        "Supermercado", "Lluvioso", "Mochila", "Viajar", "Gato", "Perro", "Sol",
-        "Luna", "Montaña", "Coche", "Libro", "Mesa", "Silla", "Profesor", "Música"
-    ];
-    // --- FIN DE LA LISTA DE PALABRAS ---
+    let palabras = [];
+
+    function cargarPalabras() {
+        return fetch('nombres.json')
+            .then(resp => resp.json())
+            .then(data => {
+                palabras = data.nombres || [];
+            })
+            .catch(err => console.error('Error al cargar nombres:', err));
+    }
 
     function iniciarJuego() {
-        const tamano = parseInt(selectorTamano.value, 10);
-        tablero.style.setProperty('--grid-size', tamano);
+
+        if (palabras.length === 0) {
+            console.error('La lista de palabras est\u00e1 vac\u00eda');
+            return;
+        }
+
         tablero.innerHTML = '';
         tablero.classList.remove('vista-espia');
-        const totalCasillas = tamano * tamano;
-        const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+        const palabrasJuego = [...palabras].sort(() => 0.5 - Math.random()).slice(0, 25);
+
         let roles = [];
         const asesinos = 1;
         const restantes = totalCasillas - asesinos;
@@ -46,5 +52,5 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.toggle('vista-espia');
     });
 
-    iniciarJuego();
+    cargarPalabras().then(iniciarJuego);
 });
