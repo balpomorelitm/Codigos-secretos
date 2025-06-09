@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let palabrasA2 = [];
     let tamanoActual = parseInt(tamanoGridSelect.value);
 
-    let tamanoActual = 5;
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
     function cargarPalabras() {
@@ -93,9 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
         tarjetaSeleccionada = null;
 
-        const listaPalabras = obtenerListaNivel(nivelSelect.value);
+        const palabrasBase = listaPalabras || obtenerListaNivel(nivelSelect.value);
 
-        if (listaPalabras.length === 0) {
+        if (palabrasBase.length === 0) {
 
             console.error('La lista de palabras est\u00e1 vac\u00eda');
             return;
@@ -105,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.remove('vista-espia');
 
         const totalCasillas = tamanoActual * tamanoActual;
-        const palabrasJuego = listaPalabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+        const palabrasJuego = palabrasBase.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
 
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
@@ -144,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
                     restantes[tarjeta.dataset.rol]--;
                     actualizarContador();
+                }
                 if (tarjeta.classList.contains('revelada')) return;
                 if (tarjetaSeleccionada) {
                     tarjetaSeleccionada.classList.remove('seleccionada');
@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nuevo = parseInt(tooltipGrid.value);
         let modo = 'normal';
         modoRadios.forEach(r => { if (r.checked) modo = r.value; });
+        const palabrasBase = obtenerListaNivel(nivelSelect.value);
         const ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
         let listaFinal;
 
@@ -223,7 +224,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     colorearTitulo();
     cargarPalabras().then(iniciarJuego);
-
-    cargarPalabras();
 
 });
