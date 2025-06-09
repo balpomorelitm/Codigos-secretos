@@ -237,8 +237,9 @@ button:disabled {
 
 .confirmar-texto {
     fill: #fff;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: bold;
+    text-transform: uppercase;
 }
 /* Estilo tipo carta recortada para el título */
 .eft2 {
