@@ -13,12 +13,6 @@
     </header>
     <main>
     <div class="controles">
-        <label for="tamanoGrid">Tamaño del tablero:</label>
-        <select id="tamanoGrid">
-            <option value="5" selected>5x5</option>
-            <option value="4">4x4</option>
-            <option value="3">3x3</option>
-        </select>
         <button id="nuevoJuego">Nuevo Juego</button>
         <button id="vistaEspia">Ver/Ocultar Vista del Espía</button>
     </div>
@@ -27,6 +21,25 @@
         <p>Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span></p>
     </div>
     <div id="tablero"></div>
+    <div id="configTooltip" class="tooltip oculto">
+        <div class="tooltip-contenido">
+            <h2>Configurar Juego</h2>
+            <label for="tamanoTooltip">Tamaño del tablero:</label>
+            <select id="tamanoTooltip">
+                <option value="5" selected>5x5</option>
+                <option value="4">4x4</option>
+                <option value="3">3x3</option>
+            </select>
+            <div class="opciones">
+                <label><input type="radio" name="modoJuego" value="normal" checked> Normal</label>
+                <label><input type="radio" name="modoJuego" value="custom"> Personalizado</label>
+                <label><input type="radio" name="modoJuego" value="agregar"> Añadir palabras</label>
+            </div>
+            <textarea id="palabrasPersonalizadas" placeholder="Palabras separadas por coma"></textarea>
+            <button id="comenzarJuego">Comenzar</button>
+            <button id="cancelarJuego">Cancelar</button>
+        </div>
+    </div>
     </main>
     <script src="script.js"></script>
 </div>
