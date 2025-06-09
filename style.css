@@ -1,3 +1,7 @@
+:root {
+    --grid-size: 5;
+}
+
 body {
     font-family: sans-serif;
     text-align: center;
@@ -15,13 +19,16 @@ button {
     border-radius: 5px;
     margin: 5px;
 }
-#informacion {
-    margin: 10px 0;
-    font-weight: bold;
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 5px;
 }
 #tablero {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(var(--grid-size), 1fr);
     gap: 10px;
     width: 90%;
     max-width: 800px;

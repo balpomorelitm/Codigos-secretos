@@ -2,18 +2,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const tablero = document.getElementById('tablero');
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
+
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
     const azulRestantes = document.getElementById('azulRestantes');
 
-    // --- ¡EDITA ESTA LISTA PARA USAR TUS PROPIAS PALABRAS! ---
-    const palabras = [
-        "Hospital", "Guitarra", "Zumo", "Río", "Biblioteca", "Taxi", "Casa", "Pan",
-        "Playa", "Hong Kong", "Teatro", "Semana", "Camina", "Aeropuerto", "Bailar",
-        "Supermercado", "Lluvioso", "Mochila", "Viajar", "Gato", "Perro", "Sol",
-        "Luna", "Montaña", "Coche", "Libro", "Mesa", "Silla", "Profesor", "Música"
-    ];
-    // --- FIN DE LA LISTA DE PALABRAS ---
+
+    let palabras = [];
+
+    function cargarPalabras() {
+        return fetch('nombres.json')
+            .then(resp => resp.json())
+            .then(data => {
+                palabras = data.nombres || [];
+            })
+            .catch(err => console.error('Error al cargar nombres:', err));
+    }
 
     let restantes;
     let equipoInicial;
@@ -24,8 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function iniciarJuego() {
+
+        if (palabras.length === 0) {
+            console.error('La lista de palabras est\u00e1 vac\u00eda');
+            return;
+        }
+
         tablero.innerHTML = '';
         tablero.classList.remove('vista-espia');
+
         const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, 25);
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
@@ -37,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < restantes.rojo; i++) roles.push('rojo');
         for (let i = 0; i < restantes.azul; i++) roles.push('azul');
         for (let i = 0; i < 7; i++) roles.push('neutro');
+
         roles.push('asesino');
         roles = roles.sort(() => 0.5 - Math.random());
         palabrasJuego.forEach((palabra, i) => {
@@ -52,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     restantes[tarjeta.dataset.rol]--;
                     actualizarContador();
                 }
+
             });
             tablero.appendChild(tarjeta);
         });
@@ -62,5 +75,5 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.toggle('vista-espia');
     });
 
-    iniciarJuego();
+    cargarPalabras().then(iniciarJuego);
 });
