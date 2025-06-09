@@ -218,15 +218,27 @@ button:disabled {
     border-radius: 50%;
     width: 80px;
     height: 80px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 4px solid #b30000;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.7), inset 0 0 5px rgba(255,255,255,0.5);
 }
 #confirmar:hover:not(:disabled) {
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.9), inset 0 0 5px rgba(255,255,255,0.8);
     transform: scale(1.05);
+}
+
+.confirmar-svg {
+    width: 70px;
+    height: 70px;
+}
+
+.confirmar-texto {
+    fill: #fff;
+    font-size: 0.75rem;
+    font-weight: bold;
 }
 
 
