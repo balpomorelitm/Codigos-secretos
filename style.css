@@ -120,6 +120,17 @@ select {
     margin: 10px 0;
 }
 
+.turno-boton {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.turno-boton.rojo { background-color: #ff6b6b; }
+.turno-boton.azul { background-color: #4d90fe; }
+
 .rojo { color: #ff0000; }
 .azul { color: #0000ff; }
 

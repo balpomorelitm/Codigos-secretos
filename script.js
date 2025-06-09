@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tamanoGridSelect = document.getElementById('tamanoGrid');
     const nivelSelect = document.getElementById('nivel');
 
-    const botonEquipoRojo = document.getElementById('equipoRojo');
-    const botonEquipoAzul = document.getElementById('equipoAzul');
     const botonTerminarTurno = document.getElementById('terminarTurno');
 
 
@@ -65,13 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let equipoActual;
 
     function mostrarTurno(mensajeInicio = false) {
-        if (mensajeInicio) {
-            turnoTexto.textContent = `Empieza el equipo ${equipoActual.toUpperCase()}`;
-        } else {
-            turnoTexto.textContent = `Turno de: EQUIPO ${equipoActual.toUpperCase()}`;
-        }
-        turnoTexto.classList.remove('rojo', 'azul');
-        turnoTexto.classList.add(equipoActual);
+        const textoBase = mensajeInicio ? 'Empieza el equipo' : 'Turno de: EQUIPO';
+        turnoTexto.innerHTML = `${textoBase} <span class="turno-boton ${equipoActual}">${equipoActual.toUpperCase()}</span>`;
     }
 
     function actualizarContador() {
@@ -180,15 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    botonEquipoRojo.addEventListener('click', () => {
-        equipoActual = 'rojo';
-        mostrarTurno();
-    });
-
-    botonEquipoAzul.addEventListener('click', () => {
-        equipoActual = 'azul';
-        mostrarTurno();
-    });
 
     botonTerminarTurno.addEventListener('click', () => {
         equipoActual = equipoActual === 'rojo' ? 'azul' : 'rojo';
