@@ -101,6 +101,23 @@ select {
     box-shadow: 0 6px 10px rgba(0,0,0,0.2);
 }
 
+#tablero.modo-tablet .tarjeta {
+    position: relative;
+    justify-content: flex-end;
+    padding-bottom: 0.4em;
+}
+
+#tablero.modo-tablet .tarjeta::before {
+    content: attr(data-palabra);
+    position: absolute;
+    top: 0.4em;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transform: rotate(180deg);
+    pointer-events: none;
+}
+
 .vista-espia .tarjeta.rojo { background-color: #ffadad; }
 .vista-espia .tarjeta.azul { background-color: #a0c4ff; }
 .vista-espia .tarjeta.neutro { background-color: #fdffb6; }
