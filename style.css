@@ -59,13 +59,15 @@ button {
     margin: 5px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .toggle-btn {
-    filter: brightness(0.85);
+    filter: grayscale(1) brightness(0.8);
 }
 
 .toggle-btn.active {
     filter: none;
     background-image: linear-gradient(45deg, var(--blood-red), var(--tyrian-purple));
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
 }
 
 button:hover {
