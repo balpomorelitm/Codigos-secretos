@@ -2,17 +2,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const tablero = document.getElementById('tablero');
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
+
     const tamanoGridSelect = document.getElementById('tamanoGrid');
     const nivelSelect = document.getElementById('nivel');
+
+    const botonEquipoRojo = document.getElementById('equipoRojo');
+    const botonEquipoAzul = document.getElementById('equipoAzul');
+    const botonTerminarTurno = document.getElementById('terminarTurno');
+
+
+    const tooltip = document.getElementById('configTooltip');
+    const tooltipGrid = document.getElementById('tamanoTooltip');
+    const palabrasInput = document.getElementById('palabrasPersonalizadas');
+    const comenzarJuegoBtn = document.getElementById('comenzarJuego');
+    const cancelarJuegoBtn = document.getElementById('cancelarJuego');
+    const modoRadios = document.getElementsByName('modoJuego');
+
 
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
     const azulRestantes = document.getElementById('azulRestantes');
 
+    function colorearTitulo() {
+        const titulo = document.querySelector('h1');
+        const texto = titulo.textContent;
+        titulo.innerHTML = '';
+        [...texto].forEach((letra, idx) => {
+            const span = document.createElement('span');
+            span.textContent = letra;
+            if (letra.trim() !== '') {
+                span.classList.add(idx % 2 === 0 ? 'rojo' : 'azul');
+            }
+            titulo.appendChild(span);
+        });
+    }
 
     let palabrasA1 = [];
     let palabrasA2 = [];
     let tamanoActual = parseInt(tamanoGridSelect.value);
+
+    let tamanoActual = 5;
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
     function cargarPalabras() {
@@ -33,19 +62,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let restantes;
     let equipoInicial;
+    let equipoActual;
+
+    function mostrarTurno(mensajeInicio = false) {
+        if (mensajeInicio) {
+            turnoTexto.textContent = `Empieza el equipo ${equipoActual.toUpperCase()}`;
+        } else {
+            turnoTexto.textContent = `Turno de: EQUIPO ${equipoActual.toUpperCase()}`;
+        }
+        turnoTexto.classList.remove('rojo', 'azul');
+        turnoTexto.classList.add(equipoActual);
+    }
 
     function actualizarContador() {
         rojoRestantes.textContent = restantes.rojo;
         azulRestantes.textContent = restantes.azul;
     }
 
-    function iniciarJuego(tamano = tamanoActual) {
+    function iniciarJuego(tamano = tamanoActual, listaPalabras = null) {
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
         const listaPalabras = obtenerListaNivel(nivelSelect.value);
 
         if (listaPalabras.length === 0) {
+
             console.error('La lista de palabras est\u00e1 vac\u00eda');
             return;
         }
@@ -56,13 +97,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalCasillas = tamanoActual * tamanoActual;
         const palabrasJuego = listaPalabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
 
+
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
         const base = Math.round(totalCasillas * 0.36);
         restantes = {
             rojo: equipoInicial === 'rojo' ? base : base - 1,
             azul: equipoInicial === 'azul' ? base : base - 1
         };
-        turnoTexto.textContent = `Empieza el equipo ${equipoInicial.toUpperCase()}`;
+        equipoActual = equipoInicial;
+        mostrarTurno(true);
         actualizarContador();
 
         let roles = [];
@@ -92,22 +135,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    botonNuevoJuego.addEventListener('click', iniciarJuego);
-    botonVistaEspia.addEventListener('click', () => {
-        tablero.classList.toggle('vista-espia');
+    botonNuevoJuego.addEventListener('click', () => {
+        tooltip.classList.remove('oculto');
+        tooltipGrid.value = tamanoActual;
+        palabrasInput.value = '';
+        modoRadios.forEach(r => r.checked = r.value === 'normal');
     });
 
-    tamanoGridSelect.addEventListener('change', () => {
-        const nuevo = parseInt(tamanoGridSelect.value);
-        if (nuevo === tamanoActual) return;
-        if (confirm('¿Empezar nueva partida?')) {
-            iniciarJuego(nuevo);
+    comenzarJuegoBtn.addEventListener('click', () => {
+        const nuevo = parseInt(tooltipGrid.value);
+        let modo = 'normal';
+        modoRadios.forEach(r => { if (r.checked) modo = r.value; });
+        const ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
+        let listaFinal;
+
+        if (modo === 'custom') {
+            const necesarias = nuevo * nuevo;
+            if (ingresadas.length !== necesarias) {
+                alert(`Debes introducir exactamente ${necesarias} palabras.`);
+                return;
+            }
+            listaFinal = ingresadas;
+        } else if (modo === 'agregar') {
+            listaFinal = palabrasBase.slice();
+            if (ingresadas.length) {
+                listaFinal.push(...ingresadas);
+            }
         } else {
-            tamanoGridSelect.value = tamanoActual;
+            listaFinal = palabrasBase.slice();
         }
+
+        tooltip.classList.add('oculto');
+        iniciarJuego(nuevo, listaFinal);
     });
 
     nivelSelect.addEventListener('change', iniciarJuego);
 
+    cancelarJuegoBtn.addEventListener('click', () => {
+        tooltip.classList.add('oculto');
+    });
+
+    botonVistaEspia.addEventListener('click', () => {
+        tablero.classList.toggle('vista-espia');
+    });
+
+
+    botonEquipoRojo.addEventListener('click', () => {
+        equipoActual = 'rojo';
+        mostrarTurno();
+    });
+
+    botonEquipoAzul.addEventListener('click', () => {
+        equipoActual = 'azul';
+        mostrarTurno();
+    });
+
+    botonTerminarTurno.addEventListener('click', () => {
+        equipoActual = equipoActual === 'rojo' ? 'azul' : 'rojo';
+        mostrarTurno();
+    });
+
+    colorearTitulo();
     cargarPalabras().then(iniciarJuego);
+
+    cargarPalabras();
+
 });
