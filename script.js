@@ -24,8 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const azulRestantes = document.getElementById('azulRestantes');
     const mensajeVictoria = document.getElementById('mensajeVictoria');
 
-    // Oculta el mensaje de victoria al hacer clic en cualquier parte
-    document.addEventListener('click', () => {
+    // Permite cerrar el mensaje de victoria al hacer clic en él
+    mensajeVictoria.addEventListener('click', (e) => {
+        e.stopPropagation();
         mensajeVictoria.classList.add('oculto');
     });
 
