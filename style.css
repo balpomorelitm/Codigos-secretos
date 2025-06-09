@@ -101,6 +101,16 @@ select {
     box-shadow: 0 6px 10px rgba(0,0,0,0.2);
 }
 
+.vista-espia .tarjeta.rojo {
+    background-color: #ffadad;
+    color: #fff;
+    font-weight: bold;
+}
+.vista-espia .tarjeta.azul {
+    background-color: #a0c4ff;
+    color: #fff;
+    font-weight: bold;
+}
 #tablero.modo-tablet .tarjeta {
     position: relative;
     font-size: 0.8em;
@@ -144,8 +154,16 @@ select {
 
 
 .tarjeta:hover { transform: scale(1.05); }
-.vista-espia .tarjeta[data-rol="rojo"]:not(.revelada) { background-color: #ffadad; }
-.vista-espia .tarjeta[data-rol="azul"]:not(.revelada) { background-color: #a0c4ff; }
+.vista-espia .tarjeta[data-rol="rojo"]:not(.revelada) {
+    background-color: #ffadad;
+    color: #fff;
+    font-weight: bold;
+}
+.vista-espia .tarjeta[data-rol="azul"]:not(.revelada) {
+    background-color: #a0c4ff;
+    color: #fff;
+    font-weight: bold;
+}
 .vista-espia .tarjeta[data-rol="neutro"]:not(.revelada) { background-color: #fdffb6; }
 .vista-espia .tarjeta[data-rol="asesino"]:not(.revelada) { background-color: #444; color: white; }
 
@@ -221,8 +239,14 @@ select {
     z-index: 2000;
     background: rgba(255,255,255,0.95);
 }
-.mensaje-victoria.rojo { background-color: #ffadad; color: #b30000; }
-.mensaje-victoria.azul { background-color: #a0c4ff; color: #0033cc; }
+.mensaje-victoria.rojo {
+    background-color: #ffadad;
+    color: #fff;
+}
+.mensaje-victoria.azul {
+    background-color: #a0c4ff;
+    color: #fff;
+}
 .mensaje-victoria.oculto { display: none; }
 /* Efecto de parpadeo para la tarjeta seleccionada */
 @keyframes parpadeo {
