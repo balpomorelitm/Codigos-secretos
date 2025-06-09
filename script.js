@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
     const azulRestantes = document.getElementById('azulRestantes');
+    const mensajeVictoria = document.getElementById('mensajeVictoria');
 
     function colorearTitulo() {
         const titulo = document.querySelector('h1');
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let restantes;
     let equipoInicial;
     let equipoActual;
+    let juegoTerminado = false;
     let tarjetaSeleccionada = null;
 
     function mostrarTurno(mensajeInicio = false) {
@@ -74,9 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
         azulRestantes.textContent = restantes.azul;
     }
 
+    function mostrarMensajeVictoria(equipo) {
+        mensajeVictoria.innerHTML = equipo === 'rojo'
+            ? '🔴 <strong>¡VICTORIA ROJA!</strong> 🎉'
+            : '🔵 <strong>¡VICTORIA AZUL!</strong> 🎉';
+        mensajeVictoria.classList.remove('rojo', 'azul', 'oculto');
+        mensajeVictoria.classList.add(equipo);
+    }
+
     function iniciarJuego(tamano = tamanoActual, listaPalabras = null) {
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
+        juegoTerminado = false;
+        mensajeVictoria.classList.add('oculto');
 
         botonConfirmar.disabled = true;
         tarjetaSeleccionada = null;
@@ -120,6 +132,18 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.textContent = palabra;
             tarjeta.dataset.rol = roles[i];
             tarjeta.addEventListener('click', () => {
+                if (tarjeta.classList.contains('revelada') || juegoTerminado) return;
+                tarjeta.classList.add('revelada');
+                tarjeta.classList.add(tarjeta.dataset.rol);
+                if (tarjeta.dataset.rol === 'asesino') {
+                    juegoTerminado = true;
+                    const ganador = equipoActual === 'rojo' ? 'azul' : 'rojo';
+                    mostrarMensajeVictoria(ganador);
+                    return;
+                }
+                if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
+                    restantes[tarjeta.dataset.rol]--;
+                    actualizarContador();
                 if (tarjeta.classList.contains('revelada')) return;
                 if (tarjetaSeleccionada) {
                     tarjetaSeleccionada.classList.remove('seleccionada');
