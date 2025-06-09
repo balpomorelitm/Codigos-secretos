@@ -49,10 +49,10 @@ select {
     text-transform: uppercase;
 }
 .tarjeta:hover { transform: scale(1.05); }
-.vista-espia .tarjeta.rojo { background-color: #ffadad; }
-.vista-espia .tarjeta.azul { background-color: #a0c4ff; }
-.vista-espia .tarjeta.neutro { background-color: #fdffb6; }
-.vista-espia .tarjeta.asesino { background-color: #444; color: white; }
+.vista-espia .tarjeta[data-rol="rojo"]:not(.revelada) { background-color: #ffadad; }
+.vista-espia .tarjeta[data-rol="azul"]:not(.revelada) { background-color: #a0c4ff; }
+.vista-espia .tarjeta[data-rol="neutro"]:not(.revelada) { background-color: #fdffb6; }
+.vista-espia .tarjeta[data-rol="asesino"]:not(.revelada) { background-color: #444; color: white; }
 .tarjeta.revelada {
     transform: none;
     color: white;
