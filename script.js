@@ -3,19 +3,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
 
-    // --- ¡EDITA ESTA LISTA PARA USAR TUS PROPIAS PALABRAS! ---
-    const palabras = [
-        "Hospital", "Guitarra", "Zumo", "Río", "Biblioteca", "Taxi", "Casa", "Pan",
-        "Playa", "Hong Kong", "Teatro", "Semana", "Camina", "Aeropuerto", "Bailar",
-        "Supermercado", "Lluvioso", "Mochila", "Viajar", "Gato", "Perro", "Sol",
-        "Luna", "Montaña", "Coche", "Libro", "Mesa", "Silla", "Profesor", "Música"
-    ];
-    // --- FIN DE LA LISTA DE PALABRAS ---
+    let palabras = [];
+
+    function cargarPalabras() {
+        return fetch('nombres.json')
+            .then(resp => resp.json())
+            .then(data => {
+                palabras = data.nombres || [];
+            })
+            .catch(err => console.error('Error al cargar nombres:', err));
+    }
 
     function iniciarJuego() {
+        if (palabras.length === 0) {
+            console.error('La lista de palabras est\u00e1 vac\u00eda');
+            return;
+        }
+
         tablero.innerHTML = '';
         tablero.classList.remove('vista-espia');
-        const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, 25);
+        const palabrasJuego = [...palabras].sort(() => 0.5 - Math.random()).slice(0, 25);
         let roles = [];
         for (let i = 0; i < 8; i++) roles.push('rojo');
         for (let i = 0; i < 8; i++) roles.push('azul');
@@ -40,5 +47,5 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.toggle('vista-espia');
     });
 
-    iniciarJuego();
+    cargarPalabras().then(iniciarJuego);
 });
