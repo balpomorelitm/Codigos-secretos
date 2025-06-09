@@ -164,6 +164,12 @@ select {
     color: #fff;
 }
 
+/* Asegura que el texto de la tarjeta asesino sea blanco
+   cuando coinciden los modos vista espía y tablet */
+#tablero.modo-tablet.vista-espia .tarjeta.asesino {
+    color: #fff;
+}
+
 
 .vista-espia .tarjeta.rojo { background-color: #ffadad; }
 .vista-espia .tarjeta.azul { background-color: #a0c4ff; }
