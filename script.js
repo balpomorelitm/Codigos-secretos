@@ -452,7 +452,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const palabrasBase = obtenerListaNivel(nivelActual);
         let ingresadas = [];
         if (modo !== 'normal') {
-            ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
+            ingresadas = palabrasInput.value
+                .split(/[\n,]+/)
+                .map(p => p.trim())
+                .filter(p => p);
         }
         let listaFinal;
 
