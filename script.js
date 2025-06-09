@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonVistaEspia = document.getElementById('vistaEspia');
 
     const tamanoGridSelect = document.getElementById('tamanoGrid');
+    const nivelSelect = document.getElementById('nivel');
+
     const botonEquipoRojo = document.getElementById('equipoRojo');
     const botonEquipoAzul = document.getElementById('equipoAzul');
     const botonTerminarTurno = document.getElementById('terminarTurno');
@@ -35,8 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    let palabrasA1 = [];
+    let palabrasA2 = [];
+    let tamanoActual = parseInt(tamanoGridSelect.value);
 
-    let palabrasBase = [];
     let tamanoActual = 5;
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
@@ -44,9 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return fetch('nombres.json')
             .then(resp => resp.json())
             .then(data => {
-                palabrasBase = data.nombres || [];
+                palabrasA1 = data.A1 || [];
+                palabrasA2 = data.A2 || [];
             })
             .catch(err => console.error('Error al cargar nombres:', err));
+    }
+
+    function obtenerListaNivel(nivel) {
+        if (nivel === 'a1') return palabrasA1;
+        if (nivel === 'a2') return palabrasA2;
+        return palabrasA1.concat(palabrasA2);
     }
 
     let restantes;
@@ -72,9 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
-        let lista = listaPalabras ? listaPalabras.slice() : palabrasBase.slice();
+        const listaPalabras = obtenerListaNivel(nivelSelect.value);
 
-        if (lista.length === 0) {
+        if (listaPalabras.length === 0) {
+
             console.error('La lista de palabras est\u00e1 vac\u00eda');
             return;
         }
@@ -83,7 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.remove('vista-espia');
 
         const totalCasillas = tamanoActual * tamanoActual;
-        const palabrasJuego = lista.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+        const palabrasJuego = listaPalabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
         const base = Math.round(totalCasillas * 0.36);
@@ -155,6 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tooltip.classList.add('oculto');
         iniciarJuego(nuevo, listaFinal);
     });
+
+    nivelSelect.addEventListener('change', iniciarJuego);
 
     cancelarJuegoBtn.addEventListener('click', () => {
         tooltip.classList.add('oculto');
