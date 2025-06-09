@@ -18,7 +18,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Share Tech Mono', 'Poppins', monospace;
     text-align: center;
     color: #333;
     margin: 0;
@@ -34,6 +34,7 @@ main {
 }
 
 h1 {
+    font-family: "Share Tech Mono", monospace;
     margin: 0;
     font-size: 3rem;
     text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
@@ -72,6 +73,7 @@ select {
     margin: 20px auto;
 }
 .tarjeta {
+    font-family: "Share Tech Mono", monospace;
     background-color: #fff;
     border: 2px solid #ddd;
     border-radius: 8px;
