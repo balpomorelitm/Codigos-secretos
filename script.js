@@ -50,17 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
         mensajeVictoria.classList.add('oculto');
     });
 
-    function colorearTitulo() {
-        const titulo = document.querySelector('h1.eft2');
-        const texto = titulo.textContent;
-        titulo.innerHTML = '';
+    function colorearTexto(elemento) {
+        const texto = elemento.textContent;
+        elemento.innerHTML = '';
         [...texto].forEach(letra => {
             if (letra === ' ') {
-                titulo.appendChild(document.createTextNode(' '));
+                elemento.appendChild(document.createTextNode(' '));
             } else {
                 const span = document.createElement('span');
                 span.textContent = letra;
-                titulo.appendChild(span);
+                elemento.appendChild(span);
             }
         });
     }
@@ -260,7 +259,16 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
     });
 
-    colorearTitulo();
+    const titulo = document.querySelector('h1.eft2');
+    colorearTexto(titulo);
+
+    ['nuevoJuego', 'vistaEspia', 'terminarTurno', 'tabletMode'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+            btn.classList.add('eft2-text');
+            colorearTexto(btn);
+        }
+    });
     cargarPalabras().then(iniciarJuego);
 
 });
