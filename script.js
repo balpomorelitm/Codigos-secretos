@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
     const botonTabletMode = document.getElementById('tabletMode');
+    const botonEmojiToggle = document.getElementById('emojiToggle');
 
     const botonTerminarTurno = document.getElementById('terminarTurno');
     const botonConfirmar = document.getElementById('confirmar');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const comenzarJuegoBtn = document.getElementById('comenzarJuego');
     const cancelarJuegoBtn = document.getElementById('cancelarJuego');
     const modoRadios = document.getElementsByName('modoJuego');
+    let emojisVisibles = true;
 
     const emojiA1Map = {
         "pelo": "\uD83D\uDC88",
@@ -252,6 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const emoji = emojiA1Map[palabra];
         return emoji ? `${palabra} ${emoji}` : palabra;
     }
+    function actualizarEmojis() {
+        document.querySelectorAll(".tarjeta").forEach(t => {
+            const palabra = t.dataset.palabra;
+            t.textContent = emojisVisibles ? aplicarEmojiA1(palabra) : palabra;
+        });
+    }
 
     modoRadios.forEach(r => r.addEventListener('change', actualizarPalabrasInput));
     tooltipGrid.addEventListener('change', actualizarPalabrasInput);
@@ -368,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tablero.innerHTML = '';
         tablero.classList.remove('vista-espia');
+        botonVistaEspia.classList.remove('active');
 
         const totalCasillas = tamanoActual * tamanoActual;
         const palabrasJuego = palabrasBase.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
@@ -394,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
         palabrasJuego.forEach((palabra, i) => {
             const tarjeta = document.createElement('div');
             tarjeta.classList.add('tarjeta');
-            tarjeta.textContent = aplicarEmojiA1(palabra);
+            tarjeta.textContent = emojisVisibles ? aplicarEmojiA1(palabra) : palabra;
             tarjeta.dataset.rol = roles[i];
             tarjeta.dataset.palabra = palabra;
             tarjeta.addEventListener('click', () => {
@@ -457,11 +466,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     botonVistaEspia.addEventListener('click', () => {
-        tablero.classList.toggle('vista-espia');
+        const activa = tablero.classList.toggle('vista-espia');
+        botonVistaEspia.classList.toggle('active', activa);
     });
-
     botonTabletMode.addEventListener('click', () => {
-        tablero.classList.toggle('modo-tablet');
+        const activa = tablero.classList.toggle('modo-tablet');
+        botonTabletMode.classList.toggle('active', activa);
+    });
+    botonEmojiToggle.addEventListener('click', () => {
+        emojisVisibles = !emojisVisibles;
+        botonEmojiToggle.classList.toggle('active', emojisVisibles);
+        actualizarEmojis();
     });
 
 
@@ -497,6 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
     });
 
+    botonEmojiToggle.classList.add("active");
     colorearTitulo();
     cargarPalabras().then(iniciarJuego);
 
