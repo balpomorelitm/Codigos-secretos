@@ -103,20 +103,38 @@ select {
 
 #tablero.modo-tablet .tarjeta {
     position: relative;
-    justify-content: flex-end;
-    padding-bottom: 0.4em;
+    font-size: 0.8em;
+    color: transparent;
+    overflow: hidden;
+}
+
+#tablero.modo-tablet .tarjeta::before,
+#tablero.modo-tablet .tarjeta::after {
+    content: attr(data-palabra);
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    pointer-events: none;
 }
 
 #tablero.modo-tablet .tarjeta::before {
-    content: attr(data-palabra);
-    position: absolute;
-    top: 0.4em;
-    left: 0;
-    right: 0;
-    text-align: center;
+    top: 0;
     transform: rotate(180deg);
-    pointer-events: none;
+    color: var(--tyrian-purple);
+    border-bottom: 1px solid #ddd;
 }
+
+#tablero.modo-tablet .tarjeta::after {
+    bottom: 0;
+    color: #333;
+    border-top: 1px solid #ddd;
+}
+
 
 .vista-espia .tarjeta.rojo { background-color: #ffadad; }
 .vista-espia .tarjeta.azul { background-color: #a0c4ff; }
