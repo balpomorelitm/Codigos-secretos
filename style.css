@@ -18,7 +18,7 @@
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     color: #333;
     margin: 0;
@@ -35,8 +35,19 @@ main {
 
 h1 {
     margin: 0;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    font-size: 3rem;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b, #ff416c);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: tituloEfecto 5s linear infinite;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+}
+
+@keyframes tituloEfecto {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 .controles { margin: 20px; }
 button {
@@ -96,6 +107,8 @@ select {
 .vista-espia .tarjeta.neutro { background-color: #fdffb6; }
 .vista-espia .tarjeta.asesino { background-color: #444; color: white; }
 
+
+
 .tarjeta:hover { transform: scale(1.05); }
 .vista-espia .tarjeta[data-rol="rojo"]:not(.revelada) { background-color: #ffadad; }
 .vista-espia .tarjeta[data-rol="azul"]:not(.revelada) { background-color: #a0c4ff; }
@@ -106,6 +119,11 @@ select {
     transform: none;
     color: white;
 }
+/* Colores para cada rol cuando se revela una tarjeta */
+.tarjeta.revelada.rojo { background-color: #ffadad; }
+.tarjeta.revelada.azul { background-color: #a0c4ff; }
+.tarjeta.revelada.neutro { background-color: #fdffb6; color: black; }
+.tarjeta.revelada.asesino { background-color: #444; color: white; }
 
 .tooltip {
     position: fixed;
@@ -136,4 +154,7 @@ select {
 .tooltip.oculto {
     display: none;
 }
+
+
+
 
