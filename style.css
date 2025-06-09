@@ -418,7 +418,7 @@ button:disabled {
     top: 125%;
     bottom: auto;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-80%);
     width: 80vw;
     max-width: 600px;
     background-color: #fff;
@@ -455,7 +455,7 @@ button:disabled {
 .tooltip-oculto {
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-50%) translateY(-10px);
+    transform: translateX(-80%) translateY(-10px);
 }
 
 /* Estilos para el contenido del tooltip */
