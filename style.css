@@ -229,6 +229,28 @@ button:disabled {
     transform: scale(1.05);
 }
 
+/* Estilo tipo carta recortada para el título */
+.eft2 {
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    background: #ff1f8f;
+    border-radius: 3em .5em 2em .5em/ .4em 2em .5em 3em;
+    padding: 0.2em 0.5em;
+    display: inline-block;
+}
+
+.eft2 span { display: inline-block; }
+.eft2 span:nth-child(10n + 1) { color: blue; }
+.eft2 span:nth-child(10n + 2) { color: white; background-color: red; font-size: 120%; }
+.eft2 span:nth-child(10n + 3) { color: green; }
+.eft2 span:nth-child(10n + 4) { color: #fff; text-decoration: underline; }
+.eft2 span:nth-child(10n + 5) { color: pink; font-style: italic; }
+.eft2 span:nth-child(10n + 6) { color: skyblue; font-style: italic; }
+.eft2 span:nth-child(10n + 7) { color: yellowgreen; text-decoration: underline; }
+.eft2 span:nth-child(10n + 8) { color: orange; text-decoration: underline; }
+.eft2 span:nth-child(10n + 9) { color: white; background-color: purple; font-size: 150%; border-radius: 15px; padding: 3px; }
+.eft2 span:nth-child(10n + 10) { color: navy; }
+
 
 
 

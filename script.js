@@ -31,16 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function colorearTitulo() {
-        const titulo = document.querySelector('h1');
+        const titulo = document.querySelector('h1.eft2');
         const texto = titulo.textContent;
         titulo.innerHTML = '';
-        [...texto].forEach((letra, idx) => {
-            const span = document.createElement('span');
-            span.textContent = letra;
-            if (letra.trim() !== '') {
-                span.classList.add(idx % 2 === 0 ? 'rojo' : 'azul');
+        [...texto].forEach(letra => {
+            if (letra === ' ') {
+                titulo.appendChild(document.createTextNode(' '));
+            } else {
+                const span = document.createElement('span');
+                span.textContent = letra;
+                titulo.appendChild(span);
             }
-            titulo.appendChild(span);
         });
     }
 
