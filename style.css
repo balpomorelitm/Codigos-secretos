@@ -351,8 +351,21 @@ button:disabled {
     }
     .tarjeta {
         font-size: 0.8em;
+        transform: rotate(90deg);
+    }
+    .tarjeta:hover {
+        transform: rotate(90deg) scale(1.05);
+    }
+    .tarjeta.revelada {
+        transform: rotate(90deg);
+    }
+    .tarjeta.seleccionada {
+        transform: rotate(90deg) scale(1.3);
     }
     #tablero {
         width: 100%;
+    }
+    h1.eft2 {
+        font-size: 2rem;
     }
 }
