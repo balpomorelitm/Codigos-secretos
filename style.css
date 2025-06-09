@@ -364,6 +364,7 @@ button:disabled {
     }
     #tablero {
         width: 100%;
+        gap: 5px 20px;
     }
     h1.eft2 {
         font-size: 2rem;
