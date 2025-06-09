@@ -486,3 +486,10 @@ button:disabled {
 .color-caja.rojo { background-color: #ffadad; }
 .color-caja.amarillo { background-color: #fdffb6; }
 .color-caja.negro { background-color: #444; }
+
+footer.credit {
+    font-family: "Share Tech Mono", monospace;
+    color: #555;
+    font-size: 0.8rem;
+    margin: 20px 0;
+}
