@@ -2,22 +2,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const tablero = document.getElementById('tablero');
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
-    const tamanoGridSelect = document.getElementById('tamanoGrid');
+
+    const tooltip = document.getElementById('configTooltip');
+    const tooltipGrid = document.getElementById('tamanoTooltip');
+    const palabrasInput = document.getElementById('palabrasPersonalizadas');
+    const comenzarJuegoBtn = document.getElementById('comenzarJuego');
+    const cancelarJuegoBtn = document.getElementById('cancelarJuego');
+    const modoRadios = document.getElementsByName('modoJuego');
 
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
     const azulRestantes = document.getElementById('azulRestantes');
 
 
-    let palabras = [];
-    let tamanoActual = parseInt(tamanoGridSelect.value);
+    let palabrasBase = [];
+    let tamanoActual = 5;
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
     function cargarPalabras() {
         return fetch('nombres.json')
             .then(resp => resp.json())
             .then(data => {
-                palabras = data.nombres || [];
+                palabrasBase = data.nombres || [];
             })
             .catch(err => console.error('Error al cargar nombres:', err));
     }
@@ -30,11 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
         azulRestantes.textContent = restantes.azul;
     }
 
-    function iniciarJuego(tamano = tamanoActual) {
+    function iniciarJuego(tamano = tamanoActual, listaPalabras = null) {
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
-        if (palabras.length === 0) {
+        let lista = listaPalabras ? listaPalabras.slice() : palabrasBase.slice();
+
+        if (lista.length === 0) {
             console.error('La lista de palabras est\u00e1 vac\u00eda');
             return;
         }
@@ -43,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.remove('vista-espia');
 
         const totalCasillas = tamanoActual * tamanoActual;
-        const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+        const palabrasJuego = lista.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
         const base = Math.round(totalCasillas * 0.36);
@@ -81,20 +89,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    botonNuevoJuego.addEventListener('click', iniciarJuego);
+    botonNuevoJuego.addEventListener('click', () => {
+        tooltip.classList.remove('oculto');
+        tooltipGrid.value = tamanoActual;
+        palabrasInput.value = '';
+        modoRadios.forEach(r => r.checked = r.value === 'normal');
+    });
+
+    comenzarJuegoBtn.addEventListener('click', () => {
+        const nuevo = parseInt(tooltipGrid.value);
+        let modo = 'normal';
+        modoRadios.forEach(r => { if (r.checked) modo = r.value; });
+        const ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
+        let listaFinal;
+
+        if (modo === 'custom') {
+            const necesarias = nuevo * nuevo;
+            if (ingresadas.length !== necesarias) {
+                alert(`Debes introducir exactamente ${necesarias} palabras.`);
+                return;
+            }
+            listaFinal = ingresadas;
+        } else if (modo === 'agregar') {
+            listaFinal = palabrasBase.slice();
+            if (ingresadas.length) {
+                listaFinal.push(...ingresadas);
+            }
+        } else {
+            listaFinal = palabrasBase.slice();
+        }
+
+        tooltip.classList.add('oculto');
+        iniciarJuego(nuevo, listaFinal);
+    });
+
+    cancelarJuegoBtn.addEventListener('click', () => {
+        tooltip.classList.add('oculto');
+    });
+
     botonVistaEspia.addEventListener('click', () => {
         tablero.classList.toggle('vista-espia');
     });
 
-    tamanoGridSelect.addEventListener('change', () => {
-        const nuevo = parseInt(tamanoGridSelect.value);
-        if (nuevo === tamanoActual) return;
-        if (confirm('¿Empezar nueva partida?')) {
-            iniciarJuego(nuevo);
-        } else {
-            tamanoGridSelect.value = tamanoActual;
-        }
-    });
-
-    cargarPalabras().then(iniciarJuego);
+    cargarPalabras();
 });
