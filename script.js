@@ -256,8 +256,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function actualizarEmojis() {
         document.querySelectorAll(".tarjeta").forEach(t => {
-            const palabra = t.dataset.palabra;
-            t.textContent = emojisVisibles ? aplicarEmojiA1(palabra) : palabra;
+            const base = t.dataset.palabraBase || t.dataset.palabra;
+            if (!t.dataset.palabraBase) t.dataset.palabraBase = base;
+            const texto = emojisVisibles ? aplicarEmojiA1(base) : base;
+            t.dataset.palabra = texto;
+            t.textContent = texto;
         });
     }
 
@@ -409,9 +412,10 @@ document.addEventListener('DOMContentLoaded', () => {
         palabrasJuego.forEach((palabra, i) => {
             const tarjeta = document.createElement('div');
             tarjeta.classList.add('tarjeta');
-            tarjeta.textContent = emojisVisibles ? aplicarEmojiA1(palabra) : palabra;
             tarjeta.dataset.rol = roles[i];
-            tarjeta.dataset.palabra = palabra;
+            tarjeta.dataset.palabraBase = palabra;
+            tarjeta.dataset.palabra = emojisVisibles ? aplicarEmojiA1(palabra) : palabra;
+            tarjeta.textContent = tarjeta.dataset.palabra;
             tarjeta.addEventListener('click', () => {
                 if (tarjeta.classList.contains('revelada') || juegoTerminado) return;
                 if (tarjetaSeleccionada) {
