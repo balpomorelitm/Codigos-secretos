@@ -151,7 +151,7 @@ select {
     display: inline-block;
     padding: 5px 12px;
     border-radius: 6px;
-    color: #fff;
+    color: #fff !important;
     font-weight: bold;
 }
 
