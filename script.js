@@ -20,21 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const modoRadios = document.getElementsByName('modoJuego');
 
     modoRadios.forEach(r => r.addEventListener('change', actualizarPalabrasInput));
+    tooltipGrid.addEventListener('change', actualizarPalabrasInput);
 
     function actualizarPalabrasInput() {
         let modo = 'normal';
         modoRadios.forEach(r => { if (r.checked) modo = r.value; });
+        const tam = parseInt(tooltipGrid.value) || tamanoActual;
+        const total = tam * tam;
         if (modo === 'normal') {
             palabrasInput.disabled = true;
-            palabrasInput.value = '25 palabras / 16 o 9 palabras seleccionadas al azar.';
+            palabrasInput.value = `${total} palabras seleccionadas al azar.`;
         } else if (modo === 'custom') {
             palabrasInput.disabled = false;
             palabrasInput.value = '';
-            palabrasInput.placeholder = 'Incluye 25/16 o 9 palabras separadas por coma.';
+            palabrasInput.placeholder = `Incluye ${total} palabras separadas por coma.`;
         } else {
             palabrasInput.disabled = false;
             palabrasInput.value = '';
-            palabrasInput.placeholder = 'Puedes añadir palabras opcionalmente para complementar las elegidas (25/16 o 9).';
+            palabrasInput.placeholder = `Puedes añadir palabras opcionalmente para complementar las ${total} elegidas.`;
         }
     }
 
