@@ -146,6 +146,14 @@ select {
     border-top: 1px solid #ddd;
 }
 
+/* Mejora contraste del rol asesino en modo tablet */
+#tablero.modo-tablet.vista-espia .tarjeta.asesino::before,
+#tablero.modo-tablet.vista-espia .tarjeta.asesino::after,
+#tablero.modo-tablet .tarjeta.revelada.asesino::before,
+#tablero.modo-tablet .tarjeta.revelada.asesino::after {
+    color: #fff;
+}
+
 
 .vista-espia .tarjeta.rojo { background-color: #ffadad; }
 .vista-espia .tarjeta.azul { background-color: #a0c4ff; }
