@@ -30,7 +30,18 @@
         <p>Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span></p>
     </div>
     <div class="confirmar-wrapper">
-        <button id="confirmar" disabled>Confirmar</button>
+        <button id="confirmar" disabled>
+            <svg class="confirmar-svg" viewBox="0 0 100 100">
+                <defs>
+                    <path id="trayectoria" d="M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0" />
+                </defs>
+                <text class="confirmar-texto">
+                    <textPath href="#trayectoria" startOffset="50%" text-anchor="middle">
+                        Confirmar
+                    </textPath>
+                </text>
+            </svg>
+        </button>
     </div>
     <div id="tablero"></div>
     <div id="mensajeVictoria" class="mensaje-victoria oculto"></div>
