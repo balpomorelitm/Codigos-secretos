@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tablero = document.getElementById('tablero');
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
+    const botonTabletMode = document.getElementById('tabletMode');
 
     const tamanoGridSelect = document.getElementById('tamanoGrid');
 
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.classList.add('tarjeta');
             tarjeta.textContent = palabra;
             tarjeta.dataset.rol = roles[i];
+            tarjeta.dataset.palabra = palabra;
             tarjeta.addEventListener('click', () => {
                 if (tarjeta.classList.contains('revelada') || juegoTerminado) return;
                 if (tarjetaSeleccionada) {
@@ -219,6 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     botonVistaEspia.addEventListener('click', () => {
         tablero.classList.toggle('vista-espia');
+    });
+
+    botonTabletMode.addEventListener('click', () => {
+        tablero.classList.toggle('modo-tablet');
     });
 
 
