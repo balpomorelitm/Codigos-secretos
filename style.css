@@ -153,6 +153,21 @@ select {
     display: none;
 }
 
+/* Efecto de parpadeo para la tarjeta seleccionada */
+@keyframes parpadeo {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+    50% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+}
+
+.tarjeta.seleccionada {
+    animation: parpadeo 1s infinite;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
 
 
 

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonEquipoRojo = document.getElementById('equipoRojo');
     const botonEquipoAzul = document.getElementById('equipoAzul');
     const botonTerminarTurno = document.getElementById('terminarTurno');
+    const botonConfirmar = document.getElementById('confirmar');
 
 
     const tooltip = document.getElementById('configTooltip');
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let restantes;
     let equipoInicial;
     let equipoActual;
+    let tarjetaSeleccionada = null;
 
     function mostrarTurno(mensajeInicio = false) {
         if (mensajeInicio) {
@@ -82,6 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function iniciarJuego(tamano = tamanoActual, listaPalabras = null) {
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
+
+        botonConfirmar.disabled = true;
+        tarjetaSeleccionada = null;
 
         const listaPalabras = obtenerListaNivel(nivelSelect.value);
 
@@ -123,13 +128,12 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.dataset.rol = roles[i];
             tarjeta.addEventListener('click', () => {
                 if (tarjeta.classList.contains('revelada')) return;
-                tarjeta.classList.add('revelada');
-                tarjeta.classList.add(tarjeta.dataset.rol);
-                if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
-                    restantes[tarjeta.dataset.rol]--;
-                    actualizarContador();
+                if (tarjetaSeleccionada) {
+                    tarjetaSeleccionada.classList.remove('seleccionada');
                 }
-
+                tarjetaSeleccionada = tarjeta;
+                tarjeta.classList.add('seleccionada');
+                botonConfirmar.disabled = false;
             });
             tablero.appendChild(tarjeta);
         });
@@ -193,6 +197,20 @@ document.addEventListener('DOMContentLoaded', () => {
     botonTerminarTurno.addEventListener('click', () => {
         equipoActual = equipoActual === 'rojo' ? 'azul' : 'rojo';
         mostrarTurno();
+    });
+
+    botonConfirmar.addEventListener('click', () => {
+        if (!tarjetaSeleccionada) return;
+        const tarjeta = tarjetaSeleccionada;
+        tarjeta.classList.remove('seleccionada');
+        tarjeta.classList.add('revelada');
+        tarjeta.classList.add(tarjeta.dataset.rol);
+        if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
+            restantes[tarjeta.dataset.rol]--;
+            actualizarContador();
+        }
+        tarjetaSeleccionada = null;
+        botonConfirmar.disabled = true;
     });
 
     colorearTitulo();
