@@ -418,12 +418,18 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.textContent = tarjeta.dataset.palabra;
             tarjeta.addEventListener('click', () => {
                 if (tarjeta.classList.contains('revelada') || juegoTerminado) return;
-                if (tarjetaSeleccionada) {
-                    tarjetaSeleccionada.classList.remove('seleccionada');
+                if (tarjetaSeleccionada === tarjeta) {
+                    tarjeta.classList.remove('seleccionada');
+                    tarjetaSeleccionada = null;
+                    botonConfirmar.disabled = true;
+                } else {
+                    if (tarjetaSeleccionada) {
+                        tarjetaSeleccionada.classList.remove('seleccionada');
+                    }
+                    tarjetaSeleccionada = tarjeta;
+                    tarjeta.classList.add('seleccionada');
+                    botonConfirmar.disabled = false;
                 }
-                tarjetaSeleccionada = tarjeta;
-                tarjeta.classList.add('seleccionada');
-                botonConfirmar.disabled = false;
             });
             tablero.appendChild(tarjeta);
         });
