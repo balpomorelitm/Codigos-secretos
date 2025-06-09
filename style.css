@@ -54,7 +54,7 @@ select {
 .vista-espia .tarjeta.neutro { background-color: #fdffb6; }
 .vista-espia .tarjeta.asesino { background-color: #444; color: white; }
 .tarjeta.revelada {
-    transform: rotateY(180deg);
+    transform: none;
     color: white;
 }
 .tarjeta.revelada.rojo { background-color: #d90429; }
