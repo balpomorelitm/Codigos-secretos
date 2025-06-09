@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonVistaEspia = document.getElementById('vistaEspia');
 
     const tamanoGridSelect = document.getElementById('tamanoGrid');
-    const nivelSelect = document.getElementById('nivel');
+
 
     const botonTerminarTurno = document.getElementById('terminarTurno');
     const botonConfirmar = document.getElementById('confirmar');
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tooltip = document.getElementById('configTooltip');
     const tooltipGrid = document.getElementById('tamanoTooltip');
+    const nivelTooltip = document.getElementById('nivelTooltip');
     const palabrasInput = document.getElementById('palabrasPersonalizadas');
     const comenzarJuegoBtn = document.getElementById('comenzarJuego');
     const cancelarJuegoBtn = document.getElementById('cancelarJuego');
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let palabrasA1 = [];
     let palabrasA2 = [];
     let tamanoActual = parseInt(tamanoGridSelect.value);
+    let nivelActual = nivelTooltip.value;
 
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
@@ -97,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
         tarjetaSeleccionada = null;
 
-        const palabrasBase = listaPalabras || obtenerListaNivel(nivelSelect.value);
+        const palabrasBase = listaPalabras || obtenerListaNivel(nivelActual);
 
         if (palabrasBase.length === 0) {
 
@@ -164,15 +166,17 @@ document.addEventListener('DOMContentLoaded', () => {
     botonNuevoJuego.addEventListener('click', () => {
         tooltip.classList.remove('oculto');
         tooltipGrid.value = tamanoActual;
+        nivelTooltip.value = nivelActual;
         palabrasInput.value = '';
         modoRadios.forEach(r => r.checked = r.value === 'normal');
     });
 
     comenzarJuegoBtn.addEventListener('click', () => {
         const nuevo = parseInt(tooltipGrid.value);
+        nivelActual = nivelTooltip.value;
         let modo = 'normal';
         modoRadios.forEach(r => { if (r.checked) modo = r.value; });
-        const palabrasBase = obtenerListaNivel(nivelSelect.value);
+        const palabrasBase = obtenerListaNivel(nivelActual);
         const ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
         let listaFinal;
 
@@ -196,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
         iniciarJuego(nuevo, listaFinal);
     });
 
-    nivelSelect.addEventListener('change', iniciarJuego);
 
     cancelarJuegoBtn.addEventListener('click', () => {
         tooltip.classList.add('oculto');
