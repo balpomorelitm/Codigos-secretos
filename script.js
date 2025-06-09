@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tamanoGridSelect = document.getElementById('tamanoGrid');
     const nivelSelect = document.getElementById('nivel');
 
-    const botonEquipoRojo = document.getElementById('equipoRojo');
-    const botonEquipoAzul = document.getElementById('equipoAzul');
     const botonTerminarTurno = document.getElementById('terminarTurno');
+    const botonConfirmar = document.getElementById('confirmar');
 
 
     const tooltip = document.getElementById('configTooltip');
@@ -65,15 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let equipoInicial;
     let equipoActual;
     let juegoTerminado = false;
+    let tarjetaSeleccionada = null;
 
     function mostrarTurno(mensajeInicio = false) {
-        if (mensajeInicio) {
-            turnoTexto.textContent = `Empieza el equipo ${equipoActual.toUpperCase()}`;
-        } else {
-            turnoTexto.textContent = `Turno de: EQUIPO ${equipoActual.toUpperCase()}`;
-        }
-        turnoTexto.classList.remove('rojo', 'azul');
-        turnoTexto.classList.add(equipoActual);
+        const textoBase = mensajeInicio ? 'Empieza el equipo' : 'Turno de: EQUIPO';
+        turnoTexto.innerHTML = `${textoBase} <span class="turno-boton ${equipoActual}">${equipoActual.toUpperCase()}</span>`;
     }
 
     function actualizarContador() {
@@ -94,6 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
         juegoTerminado = false;
         mensajeVictoria.classList.add('oculto');
+
+        botonConfirmar.disabled = true;
+        tarjetaSeleccionada = null;
 
         const listaPalabras = obtenerListaNivel(nivelSelect.value);
 
@@ -146,8 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
                     restantes[tarjeta.dataset.rol]--;
                     actualizarContador();
+                if (tarjeta.classList.contains('revelada')) return;
+                if (tarjetaSeleccionada) {
+                    tarjetaSeleccionada.classList.remove('seleccionada');
                 }
-
+                tarjetaSeleccionada = tarjeta;
+                tarjeta.classList.add('seleccionada');
+                botonConfirmar.disabled = false;
             });
             tablero.appendChild(tarjeta);
         });
@@ -198,19 +201,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    botonEquipoRojo.addEventListener('click', () => {
-        equipoActual = 'rojo';
-        mostrarTurno();
-    });
-
-    botonEquipoAzul.addEventListener('click', () => {
-        equipoActual = 'azul';
-        mostrarTurno();
-    });
 
     botonTerminarTurno.addEventListener('click', () => {
         equipoActual = equipoActual === 'rojo' ? 'azul' : 'rojo';
         mostrarTurno();
+    });
+
+    botonConfirmar.addEventListener('click', () => {
+        if (!tarjetaSeleccionada) return;
+        const tarjeta = tarjetaSeleccionada;
+        tarjeta.classList.remove('seleccionada');
+        tarjeta.classList.add('revelada');
+        tarjeta.classList.add(tarjeta.dataset.rol);
+        if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
+            restantes[tarjeta.dataset.rol]--;
+            actualizarContador();
+        }
+        tarjetaSeleccionada = null;
+        botonConfirmar.disabled = true;
     });
 
     colorearTitulo();

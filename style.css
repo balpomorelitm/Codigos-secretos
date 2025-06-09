@@ -120,6 +120,17 @@ select {
     margin: 10px 0;
 }
 
+.turno-boton {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.turno-boton.rojo { background-color: #ff6b6b; }
+.turno-boton.azul { background-color: #4d90fe; }
+
 .rojo { color: #ff0000; }
 .azul { color: #0000ff; }
 
@@ -168,6 +179,21 @@ select {
 .mensaje-victoria.rojo { background-color: #ffadad; color: #b30000; }
 .mensaje-victoria.azul { background-color: #a0c4ff; color: #0033cc; }
 .mensaje-victoria.oculto { display: none; }
+/* Efecto de parpadeo para la tarjeta seleccionada */
+@keyframes parpadeo {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+    50% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+}
+
+.tarjeta.seleccionada {
+    animation: parpadeo 1s infinite;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
 
 
 
