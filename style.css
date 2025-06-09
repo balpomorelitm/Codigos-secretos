@@ -15,6 +15,10 @@ button {
     border-radius: 5px;
     margin: 5px;
 }
+#informacion {
+    margin: 10px 0;
+    font-weight: bold;
+}
 #tablero {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
