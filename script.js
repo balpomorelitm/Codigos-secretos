@@ -18,6 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelarJuegoBtn = document.getElementById('cancelarJuego');
     const modoRadios = document.getElementsByName('modoJuego');
 
+    modoRadios.forEach(r => r.addEventListener('change', actualizarPalabrasInput));
+
+    function actualizarPalabrasInput() {
+        let modo = 'normal';
+        modoRadios.forEach(r => { if (r.checked) modo = r.value; });
+        if (modo === 'normal') {
+            palabrasInput.disabled = true;
+            palabrasInput.value = '25 palabras / 16 o 9 palabras seleccionadas al azar.';
+        } else if (modo === 'custom') {
+            palabrasInput.disabled = false;
+            palabrasInput.value = '';
+            palabrasInput.placeholder = 'Incluye 25/16 o 9 palabras separadas por coma.';
+        } else {
+            palabrasInput.disabled = false;
+            palabrasInput.value = '';
+            palabrasInput.placeholder = 'Puedes añadir palabras opcionalmente para complementar las elegidas (25/16 o 9).';
+        }
+    }
+
 
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
@@ -158,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nivelTooltip.value = nivelActual;
         palabrasInput.value = '';
         modoRadios.forEach(r => r.checked = r.value === 'normal');
+        actualizarPalabrasInput();
     });
 
     comenzarJuegoBtn.addEventListener('click', () => {
@@ -166,7 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let modo = 'normal';
         modoRadios.forEach(r => { if (r.checked) modo = r.value; });
         const palabrasBase = obtenerListaNivel(nivelActual);
-        const ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
+        let ingresadas = [];
+        if (modo !== 'normal') {
+            ingresadas = palabrasInput.value.split(',').map(p => p.trim()).filter(p => p);
+        }
         let listaFinal;
 
         if (modo === 'custom') {
