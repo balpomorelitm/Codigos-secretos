@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const comenzarJuegoBtn = document.getElementById('comenzarJuego');
     const cancelarJuegoBtn = document.getElementById('cancelarJuego');
     const modoRadios = document.getElementsByName('modoJuego');
-    let emojisVisibles = true;
+    let emojisVisibles = false;
 
     const emojiA1Map = {
         "pelo": "\uD83D\uDC88",
@@ -521,8 +521,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tarjetaSeleccionada = null;
         botonConfirmar.disabled = true;
     });
-
-    botonEmojiToggle.classList.add("active");
 
     /* --- Lógica para el Tooltip de Ayuda --- */
     const iconoAyuda = document.getElementById('icono-ayuda');
