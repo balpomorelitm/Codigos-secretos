@@ -11,3 +11,5 @@ usarán según el tamaño elegido (25, 16 o 9).
 Si eliges el modo **Personalizado** escribe exactamente el número indicado de
 palabras separadas por comas. Con la opción **Añadir palabras** podrás incluir
 algunas opcionales que se sumarán a las seleccionadas.
+
+© 2025 Pablo Torrado, University of Hong Kong. All rights reserved.
