@@ -107,3 +107,9 @@ select {
     color: white;
 }
 
+/* Colores para cada rol cuando se revela una tarjeta */
+.tarjeta.revelada.rojo { background-color: #ffadad; }
+.tarjeta.revelada.azul { background-color: #a0c4ff; }
+.tarjeta.revelada.neutro { background-color: #fdffb6; color: black; }
+.tarjeta.revelada.asesino { background-color: #444; color: white; }
+
