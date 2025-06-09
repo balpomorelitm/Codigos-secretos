@@ -4,9 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonVistaEspia = document.getElementById('vistaEspia');
     const botonTabletMode = document.getElementById('tabletMode');
 
-    const tamanoGridSelect = document.getElementById('tamanoGrid');
-
-
     const botonTerminarTurno = document.getElementById('terminarTurno');
     const botonConfirmar = document.getElementById('confirmar');
 
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let palabrasA1 = [];
     let palabrasA2 = [];
-    let tamanoActual = parseInt(tamanoGridSelect.value);
+    let tamanoActual = 5; // tamaño por defecto del tablero
     let nivelActual = nivelTooltip.value;
 
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
