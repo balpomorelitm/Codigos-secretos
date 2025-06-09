@@ -3,13 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
     const tamanoGridSelect = document.getElementById('tamanoGrid');
+    const nivelSelect = document.getElementById('nivel');
 
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
     const azulRestantes = document.getElementById('azulRestantes');
 
 
-    let palabras = [];
+    let palabrasA1 = [];
+    let palabrasA2 = [];
     let tamanoActual = parseInt(tamanoGridSelect.value);
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
@@ -17,9 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return fetch('nombres.json')
             .then(resp => resp.json())
             .then(data => {
-                palabras = data.nombres || [];
+                palabrasA1 = data.A1 || [];
+                palabrasA2 = data.A2 || [];
             })
             .catch(err => console.error('Error al cargar nombres:', err));
+    }
+
+    function obtenerListaNivel(nivel) {
+        if (nivel === 'a1') return palabrasA1;
+        if (nivel === 'a2') return palabrasA2;
+        return palabrasA1.concat(palabrasA2);
     }
 
     let restantes;
@@ -34,7 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
-        if (palabras.length === 0) {
+        const listaPalabras = obtenerListaNivel(nivelSelect.value);
+
+        if (listaPalabras.length === 0) {
             console.error('La lista de palabras est\u00e1 vac\u00eda');
             return;
         }
@@ -43,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.remove('vista-espia');
 
         const totalCasillas = tamanoActual * tamanoActual;
-        const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+        const palabrasJuego = listaPalabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
         const base = Math.round(totalCasillas * 0.36);
@@ -95,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tamanoGridSelect.value = tamanoActual;
         }
     });
+
+    nivelSelect.addEventListener('change', iniciarJuego);
 
     cargarPalabras().then(iniciarJuego);
 });
