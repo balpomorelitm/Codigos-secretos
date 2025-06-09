@@ -18,6 +18,34 @@
         <button id="vistaEspia">Ver/Ocultar Vista del Espía</button>
         <button id="terminarTurno">Terminar Turno</button>
         <button id="tabletMode">📱 Tablet Mode</button>
+        <div class="tooltip-container">
+            <span id="icono-ayuda">?</span>
+            <div id="tooltip-ayuda" class="tooltip-oculto">
+                <h3>¿Cómo Jugar a Código Secreto?</h3>
+                <p>
+                    El objetivo es que tu equipo adivine todas sus palabras antes que el equipo contrario. Un jugador de cada equipo es el "Jefe de Espías" y da pistas de una sola palabra para que sus compañeros adivinen.
+                </p>
+                <hr>
+                <ul>
+                    <li>
+                        <span class="color-caja azul"></span>
+                        <strong>Tarjeta de tu equipo (Azul):</strong> ¡Correcto! Tu equipo suma un punto y puedes seguir adivinando otra palabra.
+                    </li>
+                    <li>
+                        <span class="color-caja rojo"></span>
+                        <strong>Tarjeta del otro equipo (Roja):</strong> ¡Oh, no! Has ayudado al equipo contrario. Tu turno termina inmediatamente.
+                    </li>
+                    <li>
+                        <span class="color-caja amarillo"></span>
+                        <strong>Tarjeta Neutral (Civil):</strong> No pasa nada, pero tu turno termina.
+                    </li>
+                    <li>
+                        <span class="color-caja negro"></span>
+                        <strong>Tarjeta del Asesino:</strong> ¡Partida terminada! Si eliges esta tarjeta, tu equipo pierde inmediatamente.
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div id="informacion">
         <p id="turno"></p>

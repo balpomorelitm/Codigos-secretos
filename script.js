@@ -497,6 +497,25 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
     });
 
+    /* --- Lógica para el Tooltip de Ayuda --- */
+    const iconoAyuda = document.getElementById('icono-ayuda');
+    const tooltipAyuda = document.getElementById('tooltip-ayuda');
+
+    iconoAyuda.addEventListener('click', (event) => {
+        event.stopPropagation();
+        tooltipAyuda.classList.toggle('tooltip-oculto');
+    });
+
+    window.addEventListener('click', () => {
+        if (!tooltipAyuda.classList.contains('tooltip-oculto')) {
+            tooltipAyuda.classList.add('tooltip-oculto');
+        }
+    });
+
+    tooltipAyuda.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
     colorearTitulo();
     cargarPalabras().then(iniciarJuego);
 
