@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
 
+    const tamanoGridSelect = document.getElementById('tamanoGrid');
+    const botonEquipoRojo = document.getElementById('equipoRojo');
+    const botonEquipoAzul = document.getElementById('equipoAzul');
+    const botonTerminarTurno = document.getElementById('terminarTurno');
+
+
     const tooltip = document.getElementById('configTooltip');
     const tooltipGrid = document.getElementById('tamanoTooltip');
     const palabrasInput = document.getElementById('palabrasPersonalizadas');
@@ -10,9 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelarJuegoBtn = document.getElementById('cancelarJuego');
     const modoRadios = document.getElementsByName('modoJuego');
 
+
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
     const azulRestantes = document.getElementById('azulRestantes');
+
+    function colorearTitulo() {
+        const titulo = document.querySelector('h1');
+        const texto = titulo.textContent;
+        titulo.innerHTML = '';
+        [...texto].forEach((letra, idx) => {
+            const span = document.createElement('span');
+            span.textContent = letra;
+            if (letra.trim() !== '') {
+                span.classList.add(idx % 2 === 0 ? 'rojo' : 'azul');
+            }
+            titulo.appendChild(span);
+        });
+    }
 
 
     let palabrasBase = [];
@@ -30,6 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let restantes;
     let equipoInicial;
+    let equipoActual;
+
+    function mostrarTurno(mensajeInicio = false) {
+        if (mensajeInicio) {
+            turnoTexto.textContent = `Empieza el equipo ${equipoActual.toUpperCase()}`;
+        } else {
+            turnoTexto.textContent = `Turno de: EQUIPO ${equipoActual.toUpperCase()}`;
+        }
+        turnoTexto.classList.remove('rojo', 'azul');
+        turnoTexto.classList.add(equipoActual);
+    }
 
     function actualizarContador() {
         rojoRestantes.textContent = restantes.rojo;
@@ -59,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
             rojo: equipoInicial === 'rojo' ? base : base - 1,
             azul: equipoInicial === 'azul' ? base : base - 1
         };
-        turnoTexto.textContent = `Empieza el equipo ${equipoInicial.toUpperCase()}`;
+        equipoActual = equipoInicial;
+        mostrarTurno(true);
         actualizarContador();
 
         let roles = [];
@@ -131,5 +164,25 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.classList.toggle('vista-espia');
     });
 
+
+    botonEquipoRojo.addEventListener('click', () => {
+        equipoActual = 'rojo';
+        mostrarTurno();
+    });
+
+    botonEquipoAzul.addEventListener('click', () => {
+        equipoActual = 'azul';
+        mostrarTurno();
+    });
+
+    botonTerminarTurno.addEventListener('click', () => {
+        equipoActual = equipoActual === 'rojo' ? 'azul' : 'rojo';
+        mostrarTurno();
+    });
+
+    colorearTitulo();
+    cargarPalabras().then(iniciarJuego);
+
     cargarPalabras();
+
 });
