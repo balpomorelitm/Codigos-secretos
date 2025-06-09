@@ -90,15 +90,20 @@ select {
     transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0,0,0,0.2);
 }
+
 .vista-espia .tarjeta.rojo { background-color: #ffadad; }
 .vista-espia .tarjeta.azul { background-color: #a0c4ff; }
 .vista-espia .tarjeta.neutro { background-color: #fdffb6; }
 .vista-espia .tarjeta.asesino { background-color: #444; color: white; }
+
+.tarjeta:hover { transform: scale(1.05); }
+.vista-espia .tarjeta[data-rol="rojo"]:not(.revelada) { background-color: #ffadad; }
+.vista-espia .tarjeta[data-rol="azul"]:not(.revelada) { background-color: #a0c4ff; }
+.vista-espia .tarjeta[data-rol="neutro"]:not(.revelada) { background-color: #fdffb6; }
+.vista-espia .tarjeta[data-rol="asesino"]:not(.revelada) { background-color: #444; color: white; }
+
 .tarjeta.revelada {
-    transform: rotateY(180deg);
+    transform: none;
     color: white;
 }
-.tarjeta.revelada.rojo { background-color: #d90429; }
-.tarjeta.revelada.azul { background-color: #0077b6; }
-.tarjeta.revelada.neutro { background-color: #ffc971; }
-.tarjeta.revelada.asesino { background-color: #000; }
+

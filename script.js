@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tablero = document.getElementById('tablero');
     const botonNuevoJuego = document.getElementById('nuevoJuego');
     const botonVistaEspia = document.getElementById('vistaEspia');
+    const tamanoGridSelect = document.getElementById('tamanoGrid');
 
     const turnoTexto = document.getElementById('turno');
     const rojoRestantes = document.getElementById('rojoRestantes');
@@ -9,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let palabras = [];
+    let tamanoActual = parseInt(tamanoGridSelect.value);
+    document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
     function cargarPalabras() {
         return fetch('nombres.json')
@@ -27,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         azulRestantes.textContent = restantes.azul;
     }
 
-    function iniciarJuego() {
+    function iniciarJuego(tamano = tamanoActual) {
+        tamanoActual = tamano;
+        document.documentElement.style.setProperty('--grid-size', tamanoActual);
 
         if (palabras.length === 0) {
             console.error('La lista de palabras est\u00e1 vac\u00eda');
@@ -37,17 +42,23 @@ document.addEventListener('DOMContentLoaded', () => {
         tablero.innerHTML = '';
         tablero.classList.remove('vista-espia');
 
-        const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, 25);
+        const totalCasillas = tamanoActual * tamanoActual;
+        const palabrasJuego = palabras.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
-        restantes = { rojo: equipoInicial === 'rojo' ? 9 : 8, azul: equipoInicial === 'azul' ? 9 : 8 };
+        const base = Math.round(totalCasillas * 0.36);
+        restantes = {
+            rojo: equipoInicial === 'rojo' ? base : base - 1,
+            azul: equipoInicial === 'azul' ? base : base - 1
+        };
         turnoTexto.textContent = `Empieza el equipo ${equipoInicial.toUpperCase()}`;
         actualizarContador();
 
         let roles = [];
         for (let i = 0; i < restantes.rojo; i++) roles.push('rojo');
         for (let i = 0; i < restantes.azul; i++) roles.push('azul');
-        for (let i = 0; i < 7; i++) roles.push('neutro');
+        const neutros = totalCasillas - restantes.rojo - restantes.azul - 1;
+        for (let i = 0; i < neutros; i++) roles.push('neutro');
 
         roles.push('asesino');
         roles = roles.sort(() => 0.5 - Math.random());
@@ -73,6 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
     botonNuevoJuego.addEventListener('click', iniciarJuego);
     botonVistaEspia.addEventListener('click', () => {
         tablero.classList.toggle('vista-espia');
+    });
+
+    tamanoGridSelect.addEventListener('change', () => {
+        const nuevo = parseInt(tamanoGridSelect.value);
+        if (nuevo === tamanoActual) return;
+        if (confirm('¿Empezar nueva partida?')) {
+            iniciarJuego(nuevo);
+        } else {
+            tamanoGridSelect.value = tamanoActual;
+        }
     });
 
     cargarPalabras().then(iniciarJuego);
