@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const azulRestantes = document.getElementById('azulRestantes');
     const mensajeVictoria = document.getElementById('mensajeVictoria');
 
+    // Oculta el mensaje de victoria al hacer clic en cualquier parte
+    document.addEventListener('click', () => {
+        mensajeVictoria.classList.add('oculto');
+    });
+
     function colorearTitulo() {
         const titulo = document.querySelector('h1');
         const texto = titulo.textContent;
