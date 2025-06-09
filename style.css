@@ -330,16 +330,3 @@ button:disabled {
 .eft2 span:nth-child(10n + 8) { color: orange; text-decoration: underline; }
 .eft2 span:nth-child(10n + 9) { color: white; background-color: purple; font-size: 150%; border-radius: 15px; padding: 3px; }
 .eft2 span:nth-child(10n + 10) { color: navy; }
-
-/* Solo efecto en el texto (sin fondo) */
-.eft2-text span { display: inline-block; }
-.eft2-text span:nth-child(10n + 1) { color: blue; }
-.eft2-text span:nth-child(10n + 2) { color: white; background-color: red; font-size: 120%; }
-.eft2-text span:nth-child(10n + 3) { color: green; }
-.eft2-text span:nth-child(10n + 4) { color: #fff; text-decoration: underline; }
-.eft2-text span:nth-child(10n + 5) { color: pink; font-style: italic; }
-.eft2-text span:nth-child(10n + 6) { color: skyblue; font-style: italic; }
-.eft2-text span:nth-child(10n + 7) { color: yellowgreen; text-decoration: underline; }
-.eft2-text span:nth-child(10n + 8) { color: orange; text-decoration: underline; }
-.eft2-text span:nth-child(10n + 9) { color: white; background-color: purple; font-size: 150%; border-radius: 15px; padding: 3px; }
-.eft2-text span:nth-child(10n + 10) { color: navy; }
