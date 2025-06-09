@@ -132,19 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.dataset.rol = roles[i];
             tarjeta.addEventListener('click', () => {
                 if (tarjeta.classList.contains('revelada') || juegoTerminado) return;
-                tarjeta.classList.add('revelada');
-                tarjeta.classList.add(tarjeta.dataset.rol);
-                if (tarjeta.dataset.rol === 'asesino') {
-                    juegoTerminado = true;
-                    const ganador = equipoActual === 'rojo' ? 'azul' : 'rojo';
-                    mostrarMensajeVictoria(ganador);
-                    return;
-                }
-                if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
-                    restantes[tarjeta.dataset.rol]--;
-                    actualizarContador();
-                }
-                if (tarjeta.classList.contains('revelada')) return;
                 if (tarjetaSeleccionada) {
                     tarjetaSeleccionada.classList.remove('seleccionada');
                 }
@@ -209,15 +196,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     botonConfirmar.addEventListener('click', () => {
-        if (!tarjetaSeleccionada) return;
+        if (!tarjetaSeleccionada || juegoTerminado) return;
         const tarjeta = tarjetaSeleccionada;
         tarjeta.classList.remove('seleccionada');
         tarjeta.classList.add('revelada');
         tarjeta.classList.add(tarjeta.dataset.rol);
-        if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
-            restantes[tarjeta.dataset.rol]--;
-            actualizarContador();
+
+        if (tarjeta.dataset.rol === 'asesino') {
+            juegoTerminado = true;
+            const ganador = equipoActual === 'rojo' ? 'azul' : 'rojo';
+            mostrarMensajeVictoria(ganador);
+        } else {
+            if (tarjeta.dataset.rol === 'rojo' || tarjeta.dataset.rol === 'azul') {
+                restantes[tarjeta.dataset.rol]--;
+                actualizarContador();
+                if (restantes[tarjeta.dataset.rol] === 0) {
+                    juegoTerminado = true;
+                    mostrarMensajeVictoria(tarjeta.dataset.rol);
+                }
+            }
         }
+
         tarjetaSeleccionada = null;
         botonConfirmar.disabled = true;
     });
