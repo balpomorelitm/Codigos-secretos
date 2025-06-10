@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return palabrasA1.concat(palabrasA2);
     }
 
-    let restantes;
+    let restantes = { rojo: 0, azul: 0 };
     let equipoInicial;
     let equipoActual;
     let juegoTerminado = false;
