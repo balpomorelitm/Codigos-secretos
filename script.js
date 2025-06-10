@@ -20,6 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const modoRadios = document.getElementsByName('modoJuego');
     let emojisVisibles = false;
 
+    function generarTextoColorido(texto, colores) {
+        return texto.split('').map((letra, idx) => {
+            const color = colores[idx % colores.length];
+            return `<span style="color:${color}">${letra}</span>`;
+        }).join('');
+    }
+
+    function actualizarBotonIdioma() {
+        if (idiomaActual === 'es') {
+            botonIdioma.innerHTML = generarTextoColorido('ENGLISH', ['#00247d', '#cf142b']);
+        } else {
+            botonIdioma.innerHTML = generarTextoColorido('ESPAÑOL', ['#aa151b', '#f1bf00']);
+        }
+    }
+
     let idiomaActual = 'es';
     const traducciones = {
         es: {
@@ -137,15 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     botonIdioma.addEventListener('click', () => {
         idiomaActual = idiomaActual === 'es' ? 'en' : 'es';
-        if (idiomaActual === 'es') {
-            botonIdioma.textContent = 'GB';
-            botonIdioma.classList.remove('flag-es');
-            botonIdioma.classList.add('flag-gb');
-        } else {
-            botonIdioma.textContent = 'ES';
-            botonIdioma.classList.remove('flag-gb');
-            botonIdioma.classList.add('flag-es');
-        }
+        actualizarBotonIdioma();
         aplicarTraduccion();
     });
 
@@ -686,6 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.stopPropagation();
     });
 
+    actualizarBotonIdioma();
     aplicarTraduccion();
     colorearTitulo();
     cargarPalabras().then(iniciarJuego);
