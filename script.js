@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const botonTerminarTurno = document.getElementById('terminarTurno');
     const botonConfirmar = document.getElementById('confirmar');
+    const confirmarTexto = document.getElementById('confirmarTexto');
+    const botonIdioma = document.getElementById('languageToggle');
 
 
     const tooltip = document.getElementById('configTooltip');
@@ -17,6 +19,116 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelarJuegoBtn = document.getElementById('cancelarJuego');
     const modoRadios = document.getElementsByName('modoJuego');
     let emojisVisibles = false;
+
+    let idiomaActual = 'es';
+    const traducciones = {
+        es: {
+            titulo: 'Palabras Clave',
+            nuevoJuego: '🆕 Nuevo Juego',
+            vistaEspia: '🕵️ Ver/Ocultar Vista del Espía',
+            terminarTurno: '⏭️ Terminar Turno',
+            tabletMode: '📱 Tablet Mode',
+            emojiToggle: '😀 Emojis',
+            ayudaTitulo: '¿Cómo jugar a Palabras Clave?',
+            ayudaP1: 'El objetivo es que tu equipo adivine todas sus palabras antes que el equipo contrario. Un jugador de cada equipo es el "Jefe de Espías" y da pistas de una sola palabra para que sus compañeros adivinen.',
+            ayudaP2: 'Cada pista se compone de una <strong>palabra</strong> y un <strong>número</strong> (por ejemplo: “Animales 2”). La palabra debe relacionarse con las cartas de tu equipo y en ningún caso puede ser exactamente una de las palabras del tablero. Tus compañeros podrán adivinar hasta el número de cartas indicado en la pista antes de terminar voluntariamente el turno.',
+            ayudaRolEquipo: '<strong>Tarjeta de tu equipo (por ejemplo Azul):</strong> ¡Correcto! Tu equipo suma un punto y puedes seguir adivinando otra palabra.',
+            ayudaRolRival: '<strong>Tarjeta del otro equipo (por ejemplo Roja):</strong> ¡Oh, no! Has ayudado al equipo contrario. Tu turno termina inmediatamente.',
+            ayudaRolNeutral: '<strong>Tarjeta Neutral (Civil):</strong> No pasa nada. Puedes seguir adivinando hasta que decidas terminar tu turno.',
+            ayudaRolAsesino: '<strong>Tarjeta del Asesino:</strong> ¡Partida terminada! Si eliges esta tarjeta, tu equipo pierde inmediatamente.',
+            configTitulo: 'Configurar Juego',
+            tamano: 'Tamaño del tablero:',
+            nivel: 'Nivel:',
+            mix: 'Mezcla',
+            normal: 'Normal',
+            custom: 'Personalizado',
+            agregar: 'Añadir palabras',
+            placeholder: 'Palabras separadas por coma',
+            comenzar: 'Comenzar',
+            cancelar: 'Cancelar',
+            restantes: 'Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span>',
+            confirmar: 'CONFIRMAR',
+            turnoInicio: 'Empieza el equipo',
+            turnoDe: 'Turno de: {equipo}',
+            victoriaRoja: '🔴 <strong>¡VICTORIA ROJA!</strong> 🎉',
+            victoriaAzul: '🔵 <strong>¡VICTORIA AZUL!</strong> 🎉',
+            espiaMuerto: '{emoji} El espía {equipo} ha sido asesinado',
+            alertaPalabras: 'Debes introducir exactamente {num} palabras.',
+            errorLista: 'La lista de palabras está vacía'
+        },
+        en: {
+            titulo: 'Key Words',
+            nuevoJuego: '🆕 New Game',
+            vistaEspia: '🕵️ Show/Hide Spy View',
+            terminarTurno: '⏭️ End Turn',
+            tabletMode: '📱 Tablet Mode',
+            emojiToggle: '😀 Emojis',
+            ayudaTitulo: 'How to play Key Words?',
+            ayudaP1: 'The goal is for your team to guess all its words before the other team. One player on each team is the "Spymaster" and gives single-word clues.',
+            ayudaP2: 'Each clue consists of a <strong>word</strong> and a <strong>number</strong> (e.g. "Animals 2"). The word must relate to your team\'s cards and can never be exactly one of the board words. Your teammates may guess up to the indicated number of cards before voluntarily ending the turn.',
+            ayudaRolEquipo: '<strong>Your team\'s card (e.g. Blue):</strong> Correct! Your team scores a point and may keep guessing another word.',
+            ayudaRolRival: '<strong>Other team\'s card (e.g. Red):</strong> Oh no! You helped the opposing team. Your turn ends immediately.',
+            ayudaRolNeutral: '<strong>Neutral card (Civilian):</strong> Nothing happens. You may keep guessing until you decide to end your turn.',
+            ayudaRolAsesino: '<strong>Assassin card:</strong> Game over! If you choose this card, your team loses immediately.',
+            configTitulo: 'Game Setup',
+            tamano: 'Board size:',
+            nivel: 'Level:',
+            mix: 'Mix',
+            normal: 'Normal',
+            custom: 'Custom',
+            agregar: 'Add words',
+            placeholder: 'Words separated by comma',
+            comenzar: 'Start',
+            cancelar: 'Cancel',
+            restantes: 'Remaining cards - Red: <span id="rojoRestantes"></span> | Blue: <span id="azulRestantes"></span>',
+            confirmar: 'CONFIRM',
+            turnoInicio: 'Starting team',
+            turnoDe: 'Turn of: {equipo}',
+            victoriaRoja: '🔴 <strong>RED VICTORY!</strong> 🎉',
+            victoriaAzul: '🔵 <strong>BLUE VICTORY!</strong> 🎉',
+            espiaMuerto: '{emoji} The {equipo} spymaster was assassinated',
+            alertaPalabras: 'You must enter exactly {num} words.',
+            errorLista: 'Word list is empty'
+        }
+    };
+
+    function aplicarTraduccion() {
+        const t = traducciones[idiomaActual];
+        document.getElementById('titulo').textContent = t.titulo;
+        botonNuevoJuego.textContent = t.nuevoJuego;
+        botonVistaEspia.textContent = t.vistaEspia;
+        botonTerminarTurno.textContent = t.terminarTurno;
+        botonTabletMode.textContent = t.tabletMode;
+        botonEmojiToggle.textContent = t.emojiToggle;
+        confirmarTexto.textContent = t.confirmar;
+        document.querySelector('#tooltip-ayuda h3').textContent = t.ayudaTitulo;
+        const parrafosAyuda = document.querySelectorAll('#tooltip-ayuda p');
+        if (parrafosAyuda[0]) parrafosAyuda[0].innerHTML = t.ayudaP1;
+        if (parrafosAyuda[1]) parrafosAyuda[1].innerHTML = t.ayudaP2;
+        const lisAyuda = document.querySelectorAll('#tooltip-ayuda li');
+        if (lisAyuda[0]) lisAyuda[0].innerHTML = '<span class="color-caja azul"></span>' + t.ayudaRolEquipo;
+        if (lisAyuda[1]) lisAyuda[1].innerHTML = '<span class="color-caja rojo"></span>' + t.ayudaRolRival;
+        if (lisAyuda[2]) lisAyuda[2].innerHTML = '<span class="color-caja amarillo"></span>' + t.ayudaRolNeutral;
+        if (lisAyuda[3]) lisAyuda[3].innerHTML = '<span class="color-caja negro"></span>' + t.ayudaRolAsesino;
+        document.getElementById('configTitulo').textContent = t.configTitulo;
+        document.getElementById('labelTamano').textContent = t.tamano;
+        document.getElementById('labelNivel').textContent = t.nivel;
+        document.getElementById('opcionMix').textContent = t.mix;
+        document.querySelector('#radioNormalLabel span').textContent = t.normal;
+        document.querySelector('#radioCustomLabel span').textContent = t.custom;
+        document.querySelector('#radioAgregarLabel span').textContent = t.agregar;
+        palabrasInput.placeholder = t.placeholder;
+        comenzarJuegoBtn.textContent = t.comenzar;
+        cancelarJuegoBtn.textContent = t.cancelar;
+        document.getElementById('restantesLeyenda').innerHTML = t.restantes;
+        actualizarContador();
+    }
+
+    botonIdioma.addEventListener('click', () => {
+        idiomaActual = idiomaActual === 'es' ? 'en' : 'es';
+        botonIdioma.textContent = idiomaActual === 'es' ? '🇬🇧' : '🇪🇸';
+        aplicarTraduccion();
+    });
 
     const emojiA1Map = {
         "pelo": "\uD83D\uDC88",
@@ -343,8 +455,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let tarjetaSeleccionada = null;
 
     function mostrarTurno(mensajeInicio = false) {
-        const textoBase = mensajeInicio ? 'Empieza el equipo' : 'Turno de: EQUIPO';
-        turnoTexto.innerHTML = `${textoBase} <span class="turno-boton ${equipoActual}">${equipoActual.toUpperCase()}</span>`;
+        const t = traducciones[idiomaActual];
+        let texto = mensajeInicio ? t.turnoInicio : t.turnoDe;
+        texto = texto.replace('{equipo}', `<span class="turno-boton ${equipoActual}">${equipoActual.toUpperCase()}</span>`);
+        turnoTexto.innerHTML = texto;
     }
 
     function actualizarContador() {
@@ -353,13 +467,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function mostrarMensajeVictoria(equipo, asesinado = null) {
-        mensajeVictoria.innerHTML = equipo === 'rojo'
-            ? '🔴 <strong>¡VICTORIA ROJA!</strong> 🎉'
-            : '🔵 <strong>¡VICTORIA AZUL!</strong> 🎉';
+        const t = traducciones[idiomaActual];
+        mensajeVictoria.innerHTML = equipo === 'rojo' ? t.victoriaRoja : t.victoriaAzul;
 
         if (asesinado) {
             const emoji = asesinado === 'rojo' ? '🔴' : '🔵';
-            mensajeVictoria.innerHTML += `<br>${emoji} El espía ${asesinado} ha sido asesinado`;
+            mensajeVictoria.innerHTML += '<br>' + t.espiaMuerto.replace('{emoji}', emoji).replace('{equipo}', asesinado);
         }
 
         mensajeVictoria.classList.remove('rojo', 'azul', 'oculto');
@@ -379,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (palabrasBase.length === 0) {
 
-            console.error('La lista de palabras est\u00e1 vac\u00eda');
+            console.error(traducciones[idiomaActual].errorLista);
             return;
         }
 
@@ -462,7 +575,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modo === 'custom') {
             const necesarias = nuevo * nuevo;
             if (ingresadas.length !== necesarias) {
-                alert(`Debes introducir exactamente ${necesarias} palabras.`);
+                const t = traducciones[idiomaActual];
+                alert(t.alertaPalabras.replace('{num}', necesarias));
                 return;
             }
             listaFinal = ingresadas;
@@ -550,6 +664,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.stopPropagation();
     });
 
+    aplicarTraduccion();
     colorearTitulo();
     cargarPalabras().then(iniciarJuego);
 
