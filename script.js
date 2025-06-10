@@ -46,10 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
             placeholder: 'Palabras separadas por coma',
             comenzar: 'Comenzar',
             cancelar: 'Cancelar',
+            seleccionadasAzar: '{num} palabras seleccionadas al azar.',
+            incluirExactamente: 'Incluye {num} palabras separadas por coma.',
+            anadirOpcional: 'Puedes añadir palabras opcionalmente para complementar las {num} elegidas.',
             restantes: 'Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span>',
             confirmar: 'CONFIRMAR',
-            turnoInicio: 'Empieza el equipo',
+            turnoInicio: 'Empieza el equipo {equipo}',
             turnoDe: 'Turno de: {equipo}',
+            equipoRojo: 'ROJO',
+            equipoAzul: 'AZUL',
             victoriaRoja: '🔴 <strong>¡VICTORIA ROJA!</strong> 🎉',
             victoriaAzul: '🔵 <strong>¡VICTORIA AZUL!</strong> 🎉',
             espiaMuerto: '{emoji} El espía {equipo} ha sido asesinado',
@@ -80,10 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
             placeholder: 'Words separated by comma',
             comenzar: 'Start',
             cancelar: 'Cancel',
+            seleccionadasAzar: '{num} words randomly selected.',
+            incluirExactamente: 'Include {num} words separated by comma.',
+            anadirOpcional: 'You can optionally add words to complement the {num} chosen.',
             restantes: 'Remaining cards - Red: <span id="rojoRestantes"></span> | Blue: <span id="azulRestantes"></span>',
             confirmar: 'CONFIRM',
-            turnoInicio: 'Starting team',
+            turnoInicio: 'Starting team: {equipo}',
             turnoDe: 'Turn of: {equipo}',
+            equipoRojo: 'RED',
+            equipoAzul: 'BLUE',
             victoriaRoja: '🔴 <strong>RED VICTORY!</strong> 🎉',
             victoriaAzul: '🔵 <strong>BLUE VICTORY!</strong> 🎉',
             espiaMuerto: '{emoji} The {equipo} spymaster was assassinated',
@@ -122,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelarJuegoBtn.textContent = t.cancelar;
         document.getElementById('restantesLeyenda').innerHTML = t.restantes;
         actualizarContador();
+        actualizarPalabrasInput();
     }
 
     botonIdioma.addEventListener('click', () => {
@@ -384,17 +395,18 @@ document.addEventListener('DOMContentLoaded', () => {
         modoRadios.forEach(r => { if (r.checked) modo = r.value; });
         const tam = parseInt(tooltipGrid.value) || tamanoActual;
         const total = tam * tam;
+        const t = traducciones[idiomaActual];
         if (modo === 'normal') {
             palabrasInput.disabled = true;
-            palabrasInput.value = `${total} palabras seleccionadas al azar.`;
+            palabrasInput.value = t.seleccionadasAzar.replace('{num}', total);
         } else if (modo === 'custom') {
             palabrasInput.disabled = false;
             palabrasInput.value = '';
-            palabrasInput.placeholder = `Incluye ${total} palabras separadas por coma.`;
+            palabrasInput.placeholder = t.incluirExactamente.replace('{num}', total);
         } else {
             palabrasInput.disabled = false;
             palabrasInput.value = '';
-            palabrasInput.placeholder = `Puedes añadir palabras opcionalmente para complementar las ${total} elegidas.`;
+            palabrasInput.placeholder = t.anadirOpcional.replace('{num}', total);
         }
     }
 
@@ -457,7 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function mostrarTurno(mensajeInicio = false) {
         const t = traducciones[idiomaActual];
         let texto = mensajeInicio ? t.turnoInicio : t.turnoDe;
-        texto = texto.replace('{equipo}', `<span class="turno-boton ${equipoActual}">${equipoActual.toUpperCase()}</span>`);
+        const nombreEquipo = equipoActual === 'rojo' ? t.equipoRojo : t.equipoAzul;
+        texto = texto.replace('{equipo}', `<span class="turno-boton ${equipoActual}">${nombreEquipo}</span>`);
         turnoTexto.innerHTML = texto;
     }
 
@@ -472,7 +485,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (asesinado) {
             const emoji = asesinado === 'rojo' ? '🔴' : '🔵';
-            mensajeVictoria.innerHTML += '<br>' + t.espiaMuerto.replace('{emoji}', emoji).replace('{equipo}', asesinado);
+            const nombre = asesinado === 'rojo' ? t.equipoRojo : t.equipoAzul;
+            mensajeVictoria.innerHTML += '<br>' + t.espiaMuerto.replace('{emoji}', emoji).replace('{equipo}', nombre);
         }
 
         mensajeVictoria.classList.remove('rojo', 'azul', 'oculto');
