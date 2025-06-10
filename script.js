@@ -126,7 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     botonIdioma.addEventListener('click', () => {
         idiomaActual = idiomaActual === 'es' ? 'en' : 'es';
-        botonIdioma.textContent = idiomaActual === 'es' ? '🇬🇧' : '🇪🇸';
+        if (idiomaActual === 'es') {
+            botonIdioma.textContent = 'GB';
+            botonIdioma.classList.remove('flag-es');
+            botonIdioma.classList.add('flag-gb');
+        } else {
+            botonIdioma.textContent = 'ES';
+            botonIdioma.classList.remove('flag-gb');
+            botonIdioma.classList.add('flag-es');
+        }
         aplicarTraduccion();
     });
 
