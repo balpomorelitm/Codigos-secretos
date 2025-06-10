@@ -10,8 +10,9 @@
 </head>
 <body>
 <div class="background">
+    <button id="languageToggle" class="lang-btn">🇬🇧</button>
     <header>
-        <h1 class="eft2">Palabras Clave</h1>
+        <h1 id="titulo" class="eft2">Palabras Clave</h1>
     </header>
     <main>
     <div class="controles">
@@ -56,7 +57,7 @@
     </div>
     <div id="informacion">
         <p id="turno"></p>
-        <p>Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span></p>
+        <p id="restantesLeyenda">Cartas restantes - Rojo: <span id="rojoRestantes"></span> | Azul: <span id="azulRestantes"></span></p>
     </div>
     <div class="confirmar-wrapper">
         <button id="confirmar" disabled>
@@ -65,9 +66,7 @@
                     <path id="trayectoria" d="M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0" />
                 </defs>
                 <text class="confirmar-texto">
-                    <textPath href="#trayectoria" startOffset="25%" text-anchor="middle">
-                        CONFIRMAR
-                    </textPath>
+                    <textPath id="confirmarTexto" href="#trayectoria" startOffset="25%" text-anchor="middle">CONFIRMAR</textPath>
                 </text>
             </svg>
         </button>
@@ -78,23 +77,23 @@
 
     <div id="configTooltip" class="tooltip oculto">
         <div class="tooltip-contenido">
-            <h2>Configurar Juego</h2>
-            <label for="tamanoTooltip">Tamaño del tablero:</label>
+            <h2 id="configTitulo">Configurar Juego</h2>
+            <label id="labelTamano" for="tamanoTooltip">Tamaño del tablero:</label>
             <select id="tamanoTooltip">
                 <option value="5" selected>5x5</option>
                 <option value="4">4x4</option>
                 <option value="3">3x3</option>
             </select>
-            <label for="nivelTooltip">Nivel:</label>
+            <label id="labelNivel" for="nivelTooltip">Nivel:</label>
             <select id="nivelTooltip">
                 <option value="a1" selected>A1</option>
                 <option value="a2">A2</option>
-                <option value="mix">Mezcla</option>
+                <option id="opcionMix" value="mix">Mezcla</option>
             </select>
             <div class="opciones">
-                <label><input type="radio" name="modoJuego" value="normal" checked> Normal</label>
-                <label><input type="radio" name="modoJuego" value="custom"> Personalizado</label>
-                <label><input type="radio" name="modoJuego" value="agregar"> Añadir palabras</label>
+                <label id="radioNormalLabel"><input type="radio" name="modoJuego" value="normal" checked> <span>Normal</span></label>
+                <label id="radioCustomLabel"><input type="radio" name="modoJuego" value="custom"> <span>Personalizado</span></label>
+                <label id="radioAgregarLabel"><input type="radio" name="modoJuego" value="agregar"> <span>Añadir palabras</span></label>
             </div>
             <textarea id="palabrasPersonalizadas" placeholder="Palabras separadas por coma"></textarea>
             <button id="comenzarJuego">Comenzar</button>
