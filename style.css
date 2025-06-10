@@ -518,37 +518,9 @@ footer.credit {
     font-size: 1.5rem;
     cursor: pointer;
     z-index: 1000;
-}
-
-.lang-btn.flag-gb,
-.lang-btn.flag-es {
     font-weight: bold;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
 }
 
-.lang-btn.flag-gb {
-    background-image: linear-gradient(
-        to bottom,
-        #00247d 0%,
-        #00247d 33%,
-        #ffffff 33%,
-        #ffffff 66%,
-        #cf142b 66%,
-        #cf142b 100%
-    );
-}
-
-.lang-btn.flag-es {
-    background-image: linear-gradient(
-        to bottom,
-        #aa151b 0%,
-        #aa151b 33%,
-        #f1bf00 33%,
-        #f1bf00 66%,
-        #aa151b 66%,
-        #aa151b 100%
-    );
+.lang-btn span {
+    display: inline-block;
 }
