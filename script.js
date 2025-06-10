@@ -148,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('restantesLeyenda').innerHTML = t.restantes;
         actualizarContador();
         actualizarPalabrasInput();
+        mostrarTurno(mensajeInicioActual);
     }
 
     botonIdioma.addEventListener('click', () => {
@@ -480,8 +481,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let equipoActual;
     let juegoTerminado = false;
     let tarjetaSeleccionada = null;
+    let mensajeInicioActual = false;
 
     function mostrarTurno(mensajeInicio = false) {
+        mensajeInicioActual = mensajeInicio;
         const t = traducciones[idiomaActual];
         let texto = mensajeInicio ? t.turnoInicio : t.turnoDe;
         const nombreEquipo = equipoActual === 'rojo' ? t.equipoRojo : t.equipoAzul;
