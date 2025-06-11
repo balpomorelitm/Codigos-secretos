@@ -432,7 +432,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const azulRestantes = document.getElementById('azulRestantes');
     const mensajeVictoria = document.getElementById('mensajeVictoria');
 
-    // Permite cerrar el mensaje de victoria al hacer clic en él
     mensajeVictoria.addEventListener('click', (e) => {
         e.stopPropagation();
         mensajeVictoria.classList.add('oculto');
@@ -455,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let palabrasA1 = [];
     let palabrasA2 = [];
-    let tamanoActual = 5; // tamaño por defecto del tablero
+    let tamanoActual = 5;
     let nivelActual = nivelTooltip.value;
 
     document.documentElement.style.setProperty('--grid-size', tamanoActual);
@@ -467,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 palabrasA1 = data.A1 || [];
                 palabrasA2 = data.A2 || [];
             })
-            .catch(err => console.error('Error al cargar nombres:', err));
+            .catch(() => {});
     }
 
     function obtenerListaNivel(nivel) {
@@ -523,8 +522,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const palabrasBase = listaPalabras || obtenerListaNivel(nivelActual);
 
         if (palabrasBase.length === 0) {
-
-            console.error(traducciones[idiomaActual].errorLista);
             return;
         }
 
@@ -677,7 +674,6 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
     });
 
-    /* --- Lógica para el Tooltip de Ayuda --- */
     const iconoAyuda = document.getElementById('icono-ayuda');
     const tooltipAyuda = document.getElementById('tooltip-ayuda');
 

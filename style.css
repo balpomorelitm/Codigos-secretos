@@ -156,7 +156,7 @@ select {
     border-top: 1px solid #ddd;
 }
 
-/* Mejora contraste del rol asesino en modo tablet */
+
 #tablero.modo-tablet.vista-espia .tarjeta.asesino::before,
 #tablero.modo-tablet.vista-espia .tarjeta.asesino::after,
 #tablero.modo-tablet .tarjeta.revelada.asesino::before,
@@ -164,8 +164,6 @@ select {
     color: #fff;
 }
 
-/* Asegura que el texto de la tarjeta asesino sea blanco
-   cuando coinciden los modos vista espía y tablet */
 #tablero.modo-tablet.vista-espia .tarjeta.asesino {
     color: #fff;
 }
@@ -196,7 +194,7 @@ select {
     transform: none;
     color: white;
 }
-/* Colores para cada rol cuando se revela una tarjeta */
+
 .tarjeta.revelada.rojo { background-color: #ffadad; }
 .tarjeta.revelada.azul { background-color: #a0c4ff; }
 .tarjeta.revelada.neutro { background-color: #fdffb6; color: black; }
@@ -274,7 +272,7 @@ select {
     color: #fff;
 }
 .mensaje-victoria.oculto { display: none; }
-/* Efecto de parpadeo para la tarjeta seleccionada */
+
 @keyframes parpadeo {
     0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
     50% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
@@ -328,7 +326,7 @@ button:disabled {
     font-weight: bold;
     text-transform: uppercase;
 }
-/* Estilo tipo carta recortada para el título */
+
 .eft2 {
     font-family: 'Oswald', sans-serif;
     color: #fff;
@@ -350,7 +348,7 @@ button:disabled {
 .eft2 span:nth-child(10n + 9) { color: white; background-color: purple; font-size: 150%; border-radius: 15px; padding: 3px; }
 .eft2 span:nth-child(10n + 10) { color: navy; }
 
-/* Ajustes responsivos para tablet y móvil */
+
 @media (max-width: 1024px) {
     button {
         padding: 8px 15px;
@@ -387,16 +385,16 @@ button:disabled {
     }
 }
 
-/* --- Estilos para el Tooltip de Ayuda --- */
 
-/* Contenedor para posicionar el tooltip */
+
+
 .tooltip-container {
     position: relative;
     display: inline-block;
     vertical-align: middle;
 }
 
-/* Estilo del icono '?' */
+
 #icono-ayuda {
     display: inline-flex;
     justify-content: center;
@@ -417,7 +415,7 @@ button:disabled {
     background-color: #5a6268;
 }
 
-/* Estilo de la ventana del tooltip */
+
 #tooltip-ayuda {
     position: absolute;
     top: 125%;
@@ -444,7 +442,7 @@ button:disabled {
     }
 }
 
-/* Flecha del tooltip */
+
 #tooltip-ayuda::after {
     content: '';
     position: absolute;
@@ -456,14 +454,14 @@ button:disabled {
     border-color: transparent transparent #fff transparent;
 }
 
-/* Clase para ocultar/mostrar el tooltip */
+
 .tooltip-oculto {
     opacity: 0;
     visibility: hidden;
     transform: translateX(-80%) translateY(-10px);
 }
 
-/* Estilos para el contenido del tooltip */
+
 #tooltip-ayuda h3 {
     margin-top: 0;
     color: #007bff;
@@ -487,7 +485,7 @@ button:disabled {
     margin-bottom: 10px;
 }
 
-/* Pequeños cuadrados de color para la explicación */
+
 .color-caja {
     width: 18px;
     height: 18px;
@@ -514,7 +512,7 @@ footer.credit {
     top: 10px;
     left: 10px;
     border: none;
-    background: rgba(255, 255, 255, 0.6); /* semitransparent white */
+    background: rgba(255, 255, 255, 0.6); 
     padding: 2px 6px;
     font-size: 1.5rem;
     cursor: pointer;
