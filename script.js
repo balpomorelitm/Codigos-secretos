@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mensajeVictoria.classList.add(equipo);
     }
 
-    function iniciarJuego(tamano = tamanoActual, listaPalabras = null) {
+    function iniciarJuego(tamano = tamanoActual, palabrasParaJuego = null) { // Rename parameter for clarity
         tamanoActual = tamano;
         document.documentElement.style.setProperty('--grid-size', tamanoActual);
         juegoTerminado = false;
@@ -519,9 +519,10 @@ document.addEventListener('DOMContentLoaded', () => {
         botonConfirmar.disabled = true;
         tarjetaSeleccionada = null;
 
-        const palabrasBase = listaPalabras || obtenerListaNivel(nivelActual);
+        // Use the passed wordsForGame if provided, otherwise fallback to the default logic
+        const palabrasDisponibles = palabrasParaJuego || obtenerListaNivel(nivelActual);
 
-        if (palabrasBase.length === 0) {
+        if (palabrasDisponibles.length === 0) {
             return;
         }
 
@@ -530,7 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
         botonVistaEspia.classList.remove('active');
 
         const totalCasillas = tamanoActual * tamanoActual;
-        const palabrasJuego = palabrasBase.sort(() => 0.5 - Math.random()).slice(0, totalCasillas);
+        const palabrasJuego = palabrasDisponibles.sort(() => 0.5 - Math.random()).slice(0, totalCasillas); // Use palabrasDisponibles
 
 
         equipoInicial = Math.random() < 0.5 ? 'rojo' : 'azul';
