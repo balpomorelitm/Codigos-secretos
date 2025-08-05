@@ -9,6 +9,7 @@
     --old-lace: #FFF7E9;
 }
 
+/*
 .background {
     background: linear-gradient(120deg, #74ebd5, #acb6e5, #a1c4fd, #c2e9fb);
     background-size: 400% 400%;
@@ -22,6 +23,23 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+}
+*/
+
+.background-container{
+  position: relative;
+}
+
+.background-1{
+  position: absolute;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.background-2{
+  position: absolute;
+  opacity: 1;
+  z-index: 0;
 }
 
 body {
